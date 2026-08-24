@@ -1,0 +1,29 @@
+{
+  "name": "sih-advisory-backend",
+  "version": "1.0.0",
+  "description": "AI-Driven Hyper-Local Business Advisory Platform - Backend",
+  "main": "src/server.js",
+  "type": "module",
+  "scripts": {
+    "dev": "bun --watch src/server.js",
+    "start": "bun src/server.js",
+    "seed": "bun seeds/index.js",
+    "import-schemes": "bun seeds/schemes.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.24.1",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.6.2",
+    "express-validator": "^7.3.2",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "mysql2": "^3.24.1",
+    "pdfkit": "^0.20.1",
+    "sequelize": "^6.37.8",
+    "uuid": "^14.0.2"
+  },
+  "devDependencies": {}
+}

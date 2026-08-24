@@ -1,0 +1,6 @@
+node_modules/
+.env
+bun.lock
+*.log
+fonts/*.ttf
+fonts/*.otf
