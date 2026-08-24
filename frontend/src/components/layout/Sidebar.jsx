@@ -24,8 +24,8 @@ export default function Sidebar() {
   return (
     <aside className="app-sidebar" id="app-sidebar">
       <div className="nav-brand">
-        <h1>🚀 {t('app.title', 'Business Advisory')}</h1>
-        <p>{t('app.subtitle', 'AI-Driven Rural Business Advisory')}</p>
+        <h1>🛡️ GramVyapar <span style={{ color: '#FF7A00' }}>AI</span></h1>
+        <p>{t('app.subtitle', 'Rural Business Feasibility & Advisory')}</p>
       </div>
 
       {user && (

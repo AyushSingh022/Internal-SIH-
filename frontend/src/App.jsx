@@ -6,6 +6,7 @@ import { LanguageProvider } from './context/LanguageContext';
 import AuthLayout from './layouts/AuthLayout';
 import AppLayout from './layouts/AppLayout';
 
+import LandingPage from './pages/LandingPage';
 import LoginPage from './pages/LoginPage';
 import SignupPage from './pages/SignupPage';
 import DashboardPage from './pages/DashboardPage';
@@ -21,6 +22,9 @@ export default function App() {
         <BrowserRouter>
           <Toaster position="top-right" toastOptions={{ duration: 4000 }} />
           <Routes>
+            {/* Landing page route */}
+            <Route path="/" element={<LandingPage />} />
+
             {/* Public / Auth routes */}
             <Route element={<AuthLayout />}>
               <Route path="/login" element={<LoginPage />} />
@@ -34,11 +38,10 @@ export default function App() {
               <Route path="/report/:id" element={<ReportPage />} />
               <Route path="/schemes" element={<SchemesPage />} />
               <Route path="/reports" element={<ReportsPage />} />
-              <Route path="/" element={<Navigate to="/dashboard" replace />} />
             </Route>
 
             {/* Catch-all */}
-            <Route path="*" element={<Navigate to="/dashboard" replace />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </BrowserRouter>
       </LanguageProvider>

@@ -1,9 +1,9 @@
 import { State, District, Tehsil, Block, Village } from '../src/models/index.js';
 
 export async function seedLocations() {
-  console.log('  Seeding locations...');
+  console.log('  Seeding administrative locations (States, Districts, Tehsils, Blocks, Villages)...');
 
-  // All 28 States and 8 Union Territories of India
+  // 1. ALL 28 STATES AND 8 UNION TERRITORIES OF INDIA
   const states = await State.bulkCreate([
     { name: 'Andaman and Nicobar Islands', name_local: 'अंडमान और निकोबार द्वीप समूह', lgd_code: 35 },
     { name: 'Andhra Pradesh', name_local: 'ఆంధ్ర ప్రదేశ్', lgd_code: 28 },
@@ -46,272 +46,353 @@ export async function seedLocations() {
   const stateMap = {};
   states.forEach(s => { stateMap[s.name] = s.id; });
 
-  // ── UTTAR PRADESH ──
-  const upDistricts = await District.bulkCreate([
-    { name: 'Lucknow', name_local: 'लखनऊ', state_id: stateMap['Uttar Pradesh'], lgd_code: 163 },
-    { name: 'Varanasi', name_local: 'वाराणसी', state_id: stateMap['Uttar Pradesh'], lgd_code: 178 },
-    { name: 'Gorakhpur', name_local: 'गोरखपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 155 },
-    { name: 'Prayagraj', name_local: 'प्रयागराज', state_id: stateMap['Uttar Pradesh'], lgd_code: 170 },
-    { name: 'Kanpur Nagar', name_local: 'कानपुर नगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 164 },
-    { name: 'Agra', name_local: 'आगरा', state_id: stateMap['Uttar Pradesh'], lgd_code: 142 },
-    { name: 'Jaunpur', name_local: 'जौनपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 162 },
-    { name: 'Sultanpur', name_local: 'सुल्तानपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 176 },
-  ]);
-  const upDistMap = {};
-  upDistricts.forEach(d => { upDistMap[d.name] = d.id; });
+  // 2. DISTRICTS FOR ALL STATES AND UTS
+  const districtsData = [
+    // Andaman & Nicobar
+    { name: 'South Andaman', name_local: 'दक्षिण अंडमान', state_id: stateMap['Andaman and Nicobar Islands'], lgd_code: 638 },
+    { name: 'North and Middle Andaman', name_local: 'उत्तर और मध्य अंडमान', state_id: stateMap['Andaman and Nicobar Islands'], lgd_code: 639 },
+    { name: 'Nicobar', name_local: 'निकोबार', state_id: stateMap['Andaman and Nicobar Islands'], lgd_code: 637 },
 
-  // Tehsils for UP districts
-  const upTehsils = await Tehsil.bulkCreate([
-    { name: 'Lucknow', district_id: upDistMap['Lucknow'] },
-    { name: 'Mohanlalganj', district_id: upDistMap['Lucknow'] },
-    { name: 'Bakshi Ka Talab', district_id: upDistMap['Lucknow'] },
-    { name: 'Varanasi', district_id: upDistMap['Varanasi'] },
-    { name: 'Pindra', district_id: upDistMap['Varanasi'] },
-    { name: 'Rajatalab', district_id: upDistMap['Varanasi'] },
-    { name: 'Gorakhpur', district_id: upDistMap['Gorakhpur'] },
-    { name: 'Sahjanwa', district_id: upDistMap['Gorakhpur'] },
-    { name: 'Khajni', district_id: upDistMap['Gorakhpur'] },
-    { name: 'Soraon', district_id: upDistMap['Prayagraj'] },
-    { name: 'Phulpur', district_id: upDistMap['Prayagraj'] },
-    { name: 'Kanpur', district_id: upDistMap['Kanpur Nagar'] },
-    { name: 'Bilhaur', district_id: upDistMap['Kanpur Nagar'] },
-    { name: 'Agra', district_id: upDistMap['Agra'] },
-    { name: 'Fatehabad', district_id: upDistMap['Agra'] },
-    { name: 'Jaunpur', district_id: upDistMap['Jaunpur'] },
-    { name: 'Machhalishahar', district_id: upDistMap['Jaunpur'] },
-    { name: 'Sultanpur', district_id: upDistMap['Sultanpur'] },
-    { name: 'Kadipur', district_id: upDistMap['Sultanpur'] },
-  ]);
-  const upTehsilMap = {};
-  upTehsils.forEach(t => { upTehsilMap[t.name + '_' + t.district_id] = t.id; });
+    // Andhra Pradesh
+    { name: 'Visakhapatnam', name_local: 'విశాఖపట్నం', state_id: stateMap['Andhra Pradesh'], lgd_code: 519 },
+    { name: 'NTR (Vijayawada)', name_local: 'ఎన్‌టిఆర్ జిల్లా', state_id: stateMap['Andhra Pradesh'], lgd_code: 510 },
+    { name: 'Guntur', name_local: 'గుంటూరు', state_id: stateMap['Andhra Pradesh'], lgd_code: 506 },
+    { name: 'Tirupati', name_local: 'తిరుపతి', state_id: stateMap['Andhra Pradesh'], lgd_code: 503 },
+    { name: 'Kurnool', name_local: 'కర్నూలు', state_id: stateMap['Andhra Pradesh'], lgd_code: 511 },
 
-  // Blocks for UP
-  const upBlocks = await Block.bulkCreate([
-    { name: 'Chinhat', district_id: upDistMap['Lucknow'] },
-    { name: 'Mohanlalganj', district_id: upDistMap['Lucknow'] },
-    { name: 'Gosainganj', district_id: upDistMap['Lucknow'] },
-    { name: 'Pindra', district_id: upDistMap['Varanasi'] },
-    { name: 'Sevapuri', district_id: upDistMap['Varanasi'] },
-    { name: 'Araziline', district_id: upDistMap['Varanasi'] },
-    { name: 'Campierganj', district_id: upDistMap['Gorakhpur'] },
-    { name: 'Sahjanwa', district_id: upDistMap['Gorakhpur'] },
-    { name: 'Jaunpur City', district_id: upDistMap['Jaunpur'] },
-    { name: 'Machhalishahar', district_id: upDistMap['Jaunpur'] },
-  ]);
-  const upBlockMap = {};
-  upBlocks.forEach(b => { upBlockMap[b.name] = b.id; });
+    // Arunachal Pradesh
+    { name: 'Papum Pare (Itanagar)', name_local: 'पापुम पारे', state_id: stateMap['Arunachal Pradesh'], lgd_code: 232 },
+    { name: 'Tawang', name_local: 'तवांग', state_id: stateMap['Arunachal Pradesh'], lgd_code: 236 },
+    { name: 'Changlang', name_local: 'चांगलांग', state_id: stateMap['Arunachal Pradesh'], lgd_code: 224 },
 
-  // Villages for UP
-  await Village.bulkCreate([
-    { name: 'Chinhat', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Lucknow'], tehsil_id: upTehsils[0].id, block_id: upBlocks[0].id, latitude: 26.8800, longitude: 81.0500, population: 15000 },
-    { name: 'Amausi', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Lucknow'], tehsil_id: upTehsils[0].id, block_id: upBlocks[0].id, latitude: 26.7600, longitude: 80.8800, population: 8000 },
-    { name: 'Mohanlalganj', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Lucknow'], tehsil_id: upTehsils[1].id, block_id: upBlocks[1].id, latitude: 26.7500, longitude: 80.9800, population: 12000 },
-    { name: 'Gosainganj', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Lucknow'], tehsil_id: upTehsils[2].id, block_id: upBlocks[2].id, latitude: 26.7800, longitude: 80.7500, population: 10000 },
-    { name: 'Ramnagar', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Varanasi'], tehsil_id: upTehsils[3].id, block_id: upBlocks[3].id, latitude: 25.2700, longitude: 83.0300, population: 18000 },
-    { name: 'Pindra', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Varanasi'], tehsil_id: upTehsils[4].id, block_id: upBlocks[3].id, latitude: 25.3500, longitude: 83.1200, population: 9000 },
-    { name: 'Sevapuri', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Varanasi'], tehsil_id: upTehsils[5].id, block_id: upBlocks[4].id, latitude: 25.2200, longitude: 83.1500, population: 7500 },
-    { name: 'Campierganj', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Gorakhpur'], tehsil_id: upTehsils[6].id, block_id: upBlocks[5].id, latitude: 26.8600, longitude: 83.5400, population: 11000 },
-    { name: 'Sahjanwa', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Gorakhpur'], tehsil_id: upTehsils[7].id, block_id: upBlocks[6].id, latitude: 26.8200, longitude: 83.2200, population: 14000 },
-    { name: 'Khajni', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Gorakhpur'], tehsil_id: upTehsils[8].id, block_id: upBlocks[6].id, latitude: 26.7400, longitude: 83.4600, population: 6000 },
-    { name: 'Soraon', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Prayagraj'], tehsil_id: upTehsils[9].id, latitude: 25.5100, longitude: 81.8400, population: 16000 },
-    { name: 'Phulpur', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Prayagraj'], tehsil_id: upTehsils[10].id, latitude: 25.5500, longitude: 82.0700, population: 13000 },
-    { name: 'Jaunpur City', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Jaunpur'], tehsil_id: upTehsils[15].id, block_id: upBlocks[7].id, latitude: 25.7464, longitude: 82.6837, population: 20000 },
-    { name: 'Machhalishahar', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Jaunpur'], tehsil_id: upTehsils[16].id, block_id: upBlocks[8].id, latitude: 25.6800, longitude: 82.8200, population: 11000 },
-    { name: 'Sultanpur Town', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Sultanpur'], tehsil_id: upTehsils[17].id, latitude: 26.2648, longitude: 82.0727, population: 17000 },
-    { name: 'Kadipur', state_id: stateMap['Uttar Pradesh'], district_id: upDistMap['Sultanpur'], tehsil_id: upTehsils[18].id, latitude: 26.2100, longitude: 82.1200, population: 8000 },
-  ]);
+    // Assam
+    { name: 'Kamrup Metropolitan (Guwahati)', name_local: 'কামৰূপ মহানগৰ', state_id: stateMap['Assam'], lgd_code: 280 },
+    { name: 'Dibrugarh', name_local: 'ডিব্ৰুগড়', state_id: stateMap['Assam'], lgd_code: 275 },
+    { name: 'Cachar (Silchar)', name_local: 'কাছাৰ', state_id: stateMap['Assam'], lgd_code: 271 },
+    { name: 'Jorhat', name_local: 'যোৰহাট', state_id: stateMap['Assam'], lgd_code: 279 },
 
-  // ── BIHAR ──
-  const biharDistricts = await District.bulkCreate([
+    // Bihar
     { name: 'Patna', name_local: 'पटना', state_id: stateMap['Bihar'], lgd_code: 220 },
     { name: 'Gaya', name_local: 'गया', state_id: stateMap['Bihar'], lgd_code: 206 },
     { name: 'Muzaffarpur', name_local: 'मुजफ्फरपुर', state_id: stateMap['Bihar'], lgd_code: 216 },
     { name: 'Bhagalpur', name_local: 'भागलपुर', state_id: stateMap['Bihar'], lgd_code: 204 },
     { name: 'Darbhanga', name_local: 'दरभंगा', state_id: stateMap['Bihar'], lgd_code: 211 },
-  ]);
-  const biharDistMap = {};
-  biharDistricts.forEach(d => { biharDistMap[d.name] = d.id; });
 
-  const biharTehsils = await Tehsil.bulkCreate([
-    { name: 'Patna Sadar', district_id: biharDistMap['Patna'] },
-    { name: 'Danapur', district_id: biharDistMap['Patna'] },
-    { name: 'Gaya Town', district_id: biharDistMap['Gaya'] },
-    { name: 'Bodh Gaya', district_id: biharDistMap['Gaya'] },
-    { name: 'Muzaffarpur Sadar', district_id: biharDistMap['Muzaffarpur'] },
-  ]);
+    // Chandigarh
+    { name: 'Chandigarh', name_local: 'चंडीगढ़', state_id: stateMap['Chandigarh'], lgd_code: 42 },
 
-  const biharBlocks = await Block.bulkCreate([
-    { name: 'Patna Sadar', district_id: biharDistMap['Patna'] },
-    { name: 'Danapur', district_id: biharDistMap['Patna'] },
-    { name: 'Gaya Town', district_id: biharDistMap['Gaya'] },
-    { name: 'Bodh Gaya', district_id: biharDistMap['Gaya'] },
-    { name: 'Mushari', district_id: biharDistMap['Muzaffarpur'] },
-  ]);
+    // Chhattisgarh
+    { name: 'Raipur', name_local: 'रायपुर', state_id: stateMap['Chhattisgarh'], lgd_code: 388 },
+    { name: 'Durg (Bhilai)', name_local: 'दुर्ग', state_id: stateMap['Chhattisgarh'], lgd_code: 378 },
+    { name: 'Bilaspur', name_local: 'बिलासपुर', state_id: stateMap['Chhattisgarh'], lgd_code: 375 },
+    { name: 'Bastar (Jagdalpur)', name_local: 'बस्तर', state_id: stateMap['Chhattisgarh'], lgd_code: 373 },
 
-  await Village.bulkCreate([
-    { name: 'Danapur', state_id: stateMap['Bihar'], district_id: biharDistMap['Patna'], tehsil_id: biharTehsils[1].id, block_id: biharBlocks[1].id, latitude: 25.6217, longitude: 85.0500, population: 25000 },
-    { name: 'Phulwari Sharif', state_id: stateMap['Bihar'], district_id: biharDistMap['Patna'], tehsil_id: biharTehsils[0].id, block_id: biharBlocks[0].id, latitude: 25.5800, longitude: 85.1100, population: 18000 },
-    { name: 'Bodh Gaya', state_id: stateMap['Bihar'], district_id: biharDistMap['Gaya'], tehsil_id: biharTehsils[3].id, block_id: biharBlocks[3].id, latitude: 24.6961, longitude: 84.9869, population: 30000 },
-    { name: 'Tekari', state_id: stateMap['Bihar'], district_id: biharDistMap['Gaya'], tehsil_id: biharTehsils[2].id, block_id: biharBlocks[2].id, latitude: 24.9428, longitude: 84.8400, population: 12000 },
-    { name: 'Mushari', state_id: stateMap['Bihar'], district_id: biharDistMap['Muzaffarpur'], tehsil_id: biharTehsils[4].id, block_id: biharBlocks[4].id, latitude: 26.1209, longitude: 85.3647, population: 9000 },
-  ]);
+    // Dadra and Nagar Haveli and Daman and Diu
+    { name: 'Daman', name_local: 'दमन', state_id: stateMap['Dadra and Nagar Haveli and Daman and Diu'], lgd_code: 462 },
+    { name: 'Diu', name_local: 'दीव', state_id: stateMap['Dadra and Nagar Haveli and Daman and Diu'], lgd_code: 463 },
+    { name: 'Dadra and Nagar Haveli', name_local: 'दादरा एवं नगर हवेली', state_id: stateMap['Dadra and Nagar Haveli and Daman and Diu'], lgd_code: 461 },
 
-  // ── JHARKHAND ──
-  const jhDistricts = await District.bulkCreate([
+    // Delhi
+    { name: 'New Delhi', name_local: 'नई दिल्ली', state_id: stateMap['Delhi'], lgd_code: 85 },
+    { name: 'North Delhi', name_local: 'उत्तरी दिल्ली', state_id: stateMap['Delhi'], lgd_code: 84 },
+    { name: 'South Delhi', name_local: 'दक्षिणी दिल्ली', state_id: stateMap['Delhi'], lgd_code: 88 },
+    { name: 'East Delhi', name_local: 'पूर्वी दिल्ली', state_id: stateMap['Delhi'], lgd_code: 82 },
+    { name: 'West Delhi', name_local: 'पश्चिमी दिल्ली', state_id: stateMap['Delhi'], lgd_code: 90 },
+
+    // Goa
+    { name: 'North Goa (Panaji)', name_local: 'उत्तर गोवा', state_id: stateMap['Goa'], lgd_code: 549 },
+    { name: 'South Goa (Margao)', name_local: 'दक्षिण गोवा', state_id: stateMap['Goa'], lgd_code: 550 },
+
+    // Gujarat
+    { name: 'Ahmedabad', name_local: 'અમદાવાદ', state_id: stateMap['Gujarat'], lgd_code: 438 },
+    { name: 'Surat', name_local: 'સુરત', state_id: stateMap['Gujarat'], lgd_code: 457 },
+    { name: 'Vadodara', name_local: 'વડોદરા', state_id: stateMap['Gujarat'], lgd_code: 460 },
+    { name: 'Rajkot', name_local: 'રાજકોટ', state_id: stateMap['Gujarat'], lgd_code: 453 },
+    { name: 'Bhavnagar', name_local: 'ભાવનગર', state_id: stateMap['Gujarat'], lgd_code: 442 },
+
+    // Haryana
+    { name: 'Gurugram', name_local: 'गुरुग्राम', state_id: stateMap['Haryana'], lgd_code: 66 },
+    { name: 'Faridabad', name_local: 'फरीदाबाद', state_id: stateMap['Haryana'], lgd_code: 64 },
+    { name: 'Ambala', name_local: 'अंबाला', state_id: stateMap['Haryana'], lgd_code: 59 },
+    { name: 'Hisar', name_local: 'हिसार', state_id: stateMap['Haryana'], lgd_code: 68 },
+    { name: 'Panchkula', name_local: 'पंचकुला', state_id: stateMap['Haryana'], lgd_code: 75 },
+
+    // Himachal Pradesh
+    { name: 'Shimla', name_local: 'शिमला', state_id: stateMap['Himachal Pradesh'], lgd_code: 28 },
+    { name: 'Kangra (Dharamshala)', name_local: 'कांगड़ा', state_id: stateMap['Himachal Pradesh'], lgd_code: 23 },
+    { name: 'Mandi', name_local: 'मंडी', state_id: stateMap['Himachal Pradesh'], lgd_code: 27 },
+    { name: 'Kullu', name_local: 'कुल्लू', state_id: stateMap['Himachal Pradesh'], lgd_code: 25 },
+
+    // Jammu and Kashmir
+    { name: 'Srinagar', name_local: 'श्रीनगर / سرینگر', state_id: stateMap['Jammu and Kashmir'], lgd_code: 14 },
+    { name: 'Jammu', name_local: 'जम्मू / جموں', state_id: stateMap['Jammu and Kashmir'], lgd_code: 6 },
+    { name: 'Anantnag', name_local: 'अनंतनाग / اسلام آباد', state_id: stateMap['Jammu and Kashmir'], lgd_code: 1 },
+    { name: 'Baramulla', name_local: 'बारामूला / بارਾਮੂਲਾ', state_id: stateMap['Jammu and Kashmir'], lgd_code: 3 },
+
+    // Jharkhand
     { name: 'Ranchi', name_local: 'राँची', state_id: stateMap['Jharkhand'], lgd_code: 314 },
     { name: 'Jamshedpur (East Singhbhum)', name_local: 'जमशेदपुर', state_id: stateMap['Jharkhand'], lgd_code: 307 },
     { name: 'Dhanbad', name_local: 'धनबाद', state_id: stateMap['Jharkhand'], lgd_code: 305 },
-  ]);
-  const jhDistMap = {};
-  jhDistricts.forEach(d => { jhDistMap[d.name] = d.id; });
+    { name: 'Bokaro', name_local: 'बोकारो', state_id: stateMap['Jharkhand'], lgd_code: 302 },
 
-  const jhTehsils = await Tehsil.bulkCreate([
-    { name: 'Ranchi Sadar', district_id: jhDistMap['Ranchi'] },
-    { name: 'Kanke', district_id: jhDistMap['Ranchi'] },
-    { name: 'Jamshedpur', district_id: jhDistMap['Jamshedpur (East Singhbhum)'] },
-    { name: 'Dhanbad', district_id: jhDistMap['Dhanbad'] },
-  ]);
+    // Karnataka
+    { name: 'Bengaluru Urban', name_local: 'ಬೆಂಗಳೂರು ನಗರ', state_id: stateMap['Karnataka'], lgd_code: 572 },
+    { name: 'Mysuru', name_local: 'ಮೈಸೂರು', state_id: stateMap['Karnataka'], lgd_code: 580 },
+    { name: 'Hubballi-Dharwad', name_local: 'ಧಾರವಾಡ', state_id: stateMap['Karnataka'], lgd_code: 574 },
+    { name: 'Mangaluru (Dakshina Kannada)', name_local: 'ದಕ್ಷಿಣ ಕನ್ನಡ', state_id: stateMap['Karnataka'], lgd_code: 573 },
 
-  const jhBlocks = await Block.bulkCreate([
-    { name: 'Ranchi', district_id: jhDistMap['Ranchi'] },
-    { name: 'Kanke', district_id: jhDistMap['Ranchi'] },
-  ]);
+    // Kerala
+    { name: 'Thiruvananthapuram', name_local: 'തിരുവനന്തപുരം', state_id: stateMap['Kerala'], lgd_code: 566 },
+    { name: 'Ernakulam (Kochi)', name_local: 'എറണാകുളം', state_id: stateMap['Kerala'], lgd_code: 556 },
+    { name: 'Kozhikode', name_local: 'കോഴിക്കോട്', state_id: stateMap['Kerala'], lgd_code: 560 },
+    { name: 'Thrissur', name_local: 'തൃശ്ശൂർ', state_id: stateMap['Kerala'], lgd_code: 567 },
 
-  await Village.bulkCreate([
-    { name: 'Kanke', state_id: stateMap['Jharkhand'], district_id: jhDistMap['Ranchi'], tehsil_id: jhTehsils[1].id, block_id: jhBlocks[1].id, latitude: 23.3900, longitude: 85.3200, population: 15000 },
-    { name: 'Namkum', state_id: stateMap['Jharkhand'], district_id: jhDistMap['Ranchi'], tehsil_id: jhTehsils[0].id, block_id: jhBlocks[0].id, latitude: 23.3100, longitude: 85.3800, population: 12000 },
-    { name: 'Gamharia', state_id: stateMap['Jharkhand'], district_id: jhDistMap['Jamshedpur (East Singhbhum)'], tehsil_id: jhTehsils[2].id, latitude: 22.7800, longitude: 86.1700, population: 20000 },
-  ]);
+    // Ladakh
+    { name: 'Leh', name_local: 'लेह / ླེ་', state_id: stateMap['Ladakh'], lgd_code: 9 },
+    { name: 'Kargil', name_local: 'कारगिल / ཀାରྒིལ', state_id: stateMap['Ladakh'], lgd_code: 8 },
 
-  // ── ODISHA ──
-  const odDistricts = await District.bulkCreate([
-    { name: 'Bhubaneswar (Khordha)', name_local: 'ଖୋର୍ଦ୍ଧା', state_id: stateMap['Odisha'], lgd_code: 379 },
-    { name: 'Cuttack', name_local: 'କଟକ', state_id: stateMap['Odisha'], lgd_code: 372 },
-    { name: 'Puri', name_local: 'ପୁରୀ', state_id: stateMap['Odisha'], lgd_code: 384 },
-  ]);
-  const odDistMap = {};
-  odDistricts.forEach(d => { odDistMap[d.name] = d.id; });
+    // Lakshadweep
+    { name: 'Lakshadweep (Kavaratti)', name_local: 'लक्षद्वीप', state_id: stateMap['Lakshadweep'], lgd_code: 553 },
 
-  const odTehsils = await Tehsil.bulkCreate([
-    { name: 'Bhubaneswar', district_id: odDistMap['Bhubaneswar (Khordha)'] },
-    { name: 'Jatni', district_id: odDistMap['Bhubaneswar (Khordha)'] },
-    { name: 'Cuttack Sadar', district_id: odDistMap['Cuttack'] },
-    { name: 'Puri Sadar', district_id: odDistMap['Puri'] },
-  ]);
-
-  const odBlocks = await Block.bulkCreate([
-    { name: 'Bhubaneswar Block', district_id: odDistMap['Bhubaneswar (Khordha)'] },
-    { name: 'Jatni Block', district_id: odDistMap['Bhubaneswar (Khordha)'] },
-    { name: 'Cuttack Block', district_id: odDistMap['Cuttack'] },
-    { name: 'Puri Block', district_id: odDistMap['Puri'] },
-  ]);
-
-  await Village.bulkCreate([
-    { name: 'Jatni', state_id: stateMap['Odisha'], district_id: odDistMap['Bhubaneswar (Khordha)'], tehsil_id: odTehsils[1].id, block_id: odBlocks[1].id, latitude: 20.1700, longitude: 85.7200, population: 22000 },
-    { name: 'Pipili', state_id: stateMap['Odisha'], district_id: odDistMap['Puri'], tehsil_id: odTehsils[3].id, block_id: odBlocks[3].id, latitude: 20.1200, longitude: 85.8300, population: 14000 },
-  ]);
-
-  // ── TAMIL NADU ──
-  const tnDistricts = await District.bulkCreate([
-    { name: 'Chennai', name_local: 'சென்னை', state_id: stateMap['Tamil Nadu'], lgd_code: 601 },
-    { name: 'Coimbatore', name_local: 'கோயம்புத்தூர்', state_id: stateMap['Tamil Nadu'], lgd_code: 606 },
-    { name: 'Madurai', name_local: 'மதுரை', state_id: stateMap['Tamil Nadu'], lgd_code: 612 },
-  ]);
-  const tnDistMap = {};
-  tnDistricts.forEach(d => { tnDistMap[d.name] = d.id; });
-
-  const tnTehsils = await Tehsil.bulkCreate([
-    { name: 'Ambattur', district_id: tnDistMap['Chennai'] },
-    { name: 'Coimbatore South', district_id: tnDistMap['Coimbatore'] },
-    { name: 'Madurai North', district_id: tnDistMap['Madurai'] },
-  ]);
-
-  const tnBlocks = await Block.bulkCreate([
-    { name: 'Ambattur Block', district_id: tnDistMap['Chennai'] },
-    { name: 'Sulur Block', district_id: tnDistMap['Coimbatore'] },
-    { name: 'Thirumangalam Block', district_id: tnDistMap['Madurai'] },
-  ]);
-
-  await Village.bulkCreate([
-    { name: 'Ambattur', state_id: stateMap['Tamil Nadu'], district_id: tnDistMap['Chennai'], tehsil_id: tnTehsils[0].id, block_id: tnBlocks[0].id, latitude: 13.1143, longitude: 80.1548, population: 35000 },
-    { name: 'Sulur', state_id: stateMap['Tamil Nadu'], district_id: tnDistMap['Coimbatore'], tehsil_id: tnTehsils[1].id, block_id: tnBlocks[1].id, latitude: 11.0362, longitude: 77.1230, population: 18000 },
-    { name: 'Thirumangalam', state_id: stateMap['Tamil Nadu'], district_id: tnDistMap['Madurai'], tehsil_id: tnTehsils[2].id, block_id: tnBlocks[2].id, latitude: 9.8135, longitude: 77.9850, population: 12000 },
-  ]);
-
-  // ── MADHYA PRADESH ──
-  const mpDistricts = await District.bulkCreate([
+    // Madhya Pradesh
     { name: 'Bhopal', name_local: 'भोपाल', state_id: stateMap['Madhya Pradesh'], lgd_code: 425 },
     { name: 'Indore', name_local: 'इंदौर', state_id: stateMap['Madhya Pradesh'], lgd_code: 430 },
     { name: 'Jabalpur', name_local: 'जबलपुर', state_id: stateMap['Madhya Pradesh'], lgd_code: 434 },
-  ]);
-  const mpDistMap = {};
-  mpDistricts.forEach(d => { mpDistMap[d.name] = d.id; });
+    { name: 'Gwalior', name_local: 'ग्वालियर', state_id: stateMap['Madhya Pradesh'], lgd_code: 428 },
+    { name: 'Ujjain', name_local: 'उज्जैन', state_id: stateMap['Madhya Pradesh'], lgd_code: 457 },
 
-  const mpTehsils = await Tehsil.bulkCreate([
-    { name: 'Bhopal', district_id: mpDistMap['Bhopal'] },
-    { name: 'Huzur', district_id: mpDistMap['Bhopal'] },
-    { name: 'Indore', district_id: mpDistMap['Indore'] },
-    { name: 'Jabalpur', district_id: mpDistMap['Jabalpur'] },
-  ]);
+    // Maharashtra
+    { name: 'Mumbai Suburban', name_local: 'मुंबई उपनगर', state_id: stateMap['Maharashtra'], lgd_code: 519 },
+    { name: 'Pune', name_local: 'पुणे', state_id: stateMap['Maharashtra'], lgd_code: 521 },
+    { name: 'Nagpur', name_local: 'नागपूर', state_id: stateMap['Maharashtra'], lgd_code: 516 },
+    { name: 'Nashik', name_local: 'नाशिक', state_id: stateMap['Maharashtra'], lgd_code: 518 },
+    { name: 'Thane', name_local: 'ठाणे', state_id: stateMap['Maharashtra'], lgd_code: 525 },
 
-  const mpBlocks = await Block.bulkCreate([
-    { name: 'Huzur Block', district_id: mpDistMap['Bhopal'] },
-    { name: 'Mhow Block', district_id: mpDistMap['Indore'] },
-    { name: 'Sihora Block', district_id: mpDistMap['Jabalpur'] },
-  ]);
+    // Manipur
+    { name: 'Imphal East', name_local: 'ইম্ফল পূর্ব', state_id: stateMap['Manipur'], lgd_code: 253 },
+    { name: 'Imphal West', name_local: 'ইম্ফল পশ্চিম', state_id: stateMap['Manipur'], lgd_code: 254 },
+    { name: 'Churachandpur', name_local: 'চূড়াচাঁদপুর', state_id: stateMap['Manipur'], lgd_code: 252 },
 
-  await Village.bulkCreate([
-    { name: 'Huzur', state_id: stateMap['Madhya Pradesh'], district_id: mpDistMap['Bhopal'], tehsil_id: mpTehsils[1].id, block_id: mpBlocks[0].id, latitude: 23.2599, longitude: 77.4126, population: 20000 },
-    { name: 'Mhow', state_id: stateMap['Madhya Pradesh'], district_id: mpDistMap['Indore'], tehsil_id: mpTehsils[2].id, block_id: mpBlocks[1].id, latitude: 22.5500, longitude: 75.7600, population: 15000 },
-    { name: 'Sihora', state_id: stateMap['Madhya Pradesh'], district_id: mpDistMap['Jabalpur'], tehsil_id: mpTehsils[3].id, block_id: mpBlocks[2].id, latitude: 23.4900, longitude: 80.1000, population: 10000 },
-  ]);
+    // Meghalaya
+    { name: 'East Khasi Hills (Shillong)', name_local: 'ईस्ट खासी हिल्स', state_id: stateMap['Meghalaya'], lgd_code: 269 },
+    { name: 'West Garo Hills (Tura)', name_local: 'वेस्ट गारो हिल्स', state_id: stateMap['Meghalaya'], lgd_code: 266 },
 
-  // ── TELANGANA ──
-  const tsDistricts = await District.bulkCreate([
+    // Mizoram
+    { name: 'Aizawl', name_local: 'आयजोल', state_id: stateMap['Mizoram'], lgd_code: 261 },
+    { name: 'Lunglei', name_local: 'लुंगलेई', state_id: stateMap['Mizoram'], lgd_code: 263 },
+
+    // Nagaland
+    { name: 'Kohima', name_local: 'कोहिमा', state_id: stateMap['Nagaland'], lgd_code: 247 },
+    { name: 'Dimapur', name_local: 'दीमापुर', state_id: stateMap['Nagaland'], lgd_code: 244 },
+
+    // Odisha
+    { name: 'Bhubaneswar (Khordha)', name_local: 'ଖୋର୍ଦ୍ଧା', state_id: stateMap['Odisha'], lgd_code: 379 },
+    { name: 'Cuttack', name_local: 'କଟକ', state_id: stateMap['Odisha'], lgd_code: 372 },
+    { name: 'Puri', name_local: 'ପୁରୀ', state_id: stateMap['Odisha'], lgd_code: 384 },
+    { name: 'Sambalpur', name_local: 'ସମ୍ବଲପୁର', state_id: stateMap['Odisha'], lgd_code: 387 },
+
+    // Puducherry
+    { name: 'Puducherry', name_local: 'புதுச்சேரி', state_id: stateMap['Puducherry'], lgd_code: 598 },
+    { name: 'Karaikal', name_local: 'காரைக்கால்', state_id: stateMap['Puducherry'], lgd_code: 597 },
+    { name: 'Mahe', name_local: 'மாஹே', state_id: stateMap['Puducherry'], lgd_code: 596 },
+
+    // Punjab
+    { name: 'Amritsar', name_local: 'ਅੰਮ੍ਰਿਤਸਰ', state_id: stateMap['Punjab'], lgd_code: 34 },
+    { name: 'Ludhiana', name_local: 'ਲੁਧਿਆਣਾ', state_id: stateMap['Punjab'], lgd_code: 44 },
+    { name: 'Jalandhar', name_local: 'ਜਲੰਧਰ', state_id: stateMap['Punjab'], lgd_code: 40 },
+    { name: 'Patiala', name_local: 'ਪਟਿਆਲਾ', state_id: stateMap['Punjab'], lgd_code: 48 },
+    { name: 'Mohali (SAS Nagar)', name_local: 'ਐਸ ਏ ਐਸ ਨਗਰ', state_id: stateMap['Punjab'], lgd_code: 53 },
+
+    // Rajasthan
+    { name: 'Jaipur', name_local: 'जयपुर', state_id: stateMap['Rajasthan'], lgd_code: 114 },
+    { name: 'Jodhpur', name_local: 'जोधपुर', state_id: stateMap['Rajasthan'], lgd_code: 116 },
+    { name: 'Udaipur', name_local: 'उदयपुर', state_id: stateMap['Rajasthan'], lgd_code: 125 },
+    { name: 'Kota', name_local: 'कोटा', state_id: stateMap['Rajasthan'], lgd_code: 117 },
+    { name: 'Ajmer', name_local: 'अजमेर', state_id: stateMap['Rajasthan'], lgd_code: 96 },
+
+    // Sikkim
+    { name: 'Gangtok (East Sikkim)', name_local: 'गंगटोक', state_id: stateMap['Sikkim'], lgd_code: 221 },
+    { name: 'Namchi (South Sikkim)', name_local: 'नामची', state_id: stateMap['Sikkim'], lgd_code: 223 },
+
+    // Tamil Nadu
+    { name: 'Chennai', name_local: 'சென்னை', state_id: stateMap['Tamil Nadu'], lgd_code: 601 },
+    { name: 'Coimbatore', name_local: 'கோயம்புத்தூர்', state_id: stateMap['Tamil Nadu'], lgd_code: 606 },
+    { name: 'Madurai', name_local: 'மதுரை', state_id: stateMap['Tamil Nadu'], lgd_code: 612 },
+    { name: 'Tiruchirappalli', name_local: 'திருச்சிராப்பள்ளி', state_id: stateMap['Tamil Nadu'], lgd_code: 622 },
+
+    // Telangana
     { name: 'Hyderabad', name_local: 'హైదరాబాద్', state_id: stateMap['Telangana'], lgd_code: 536 },
     { name: 'Warangal', name_local: 'వరంగల్', state_id: stateMap['Telangana'], lgd_code: 546 },
-  ]);
-  const tsDistMap = {};
-  tsDistricts.forEach(d => { tsDistMap[d.name] = d.id; });
+    { name: 'Karimnagar', name_local: 'కరీంనగర్', state_id: stateMap['Telangana'], lgd_code: 538 },
+    { name: 'Nizamabad', name_local: 'నిజామాబాద్', state_id: stateMap['Telangana'], lgd_code: 543 },
 
-  const tsTehsils = await Tehsil.bulkCreate([
-    { name: 'Hyderabad', district_id: tsDistMap['Hyderabad'] },
-    { name: 'Warangal Urban', district_id: tsDistMap['Warangal'] },
-  ]);
+    // Tripura
+    { name: 'West Tripura (Agartala)', name_local: 'পশ্চিম ত্রিপুরা', state_id: stateMap['Tripura'], lgd_code: 260 },
+    { name: 'Gomati', name_local: 'গোমতী', state_id: stateMap['Tripura'], lgd_code: 649 },
 
-  const tsBlocks = await Block.bulkCreate([
-    { name: 'Uppal Block', district_id: tsDistMap['Hyderabad'] },
-    { name: 'Hanamkonda Block', district_id: tsDistMap['Warangal'] },
-  ]);
+    // Uttar Pradesh (All 75 Districts)
+    { name: 'Agra', name_local: 'आगरा', state_id: stateMap['Uttar Pradesh'], lgd_code: 142 },
+    { name: 'Aligarh', name_local: 'अलीगढ़', state_id: stateMap['Uttar Pradesh'], lgd_code: 143 },
+    { name: 'Ambedkar Nagar', name_local: 'अम्बेडकर नगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 144 },
+    { name: 'Amethi', name_local: 'अमेठी', state_id: stateMap['Uttar Pradesh'], lgd_code: 710 },
+    { name: 'Amroha', name_local: 'अमरोहा', state_id: stateMap['Uttar Pradesh'], lgd_code: 167 },
+    { name: 'Auraiya', name_local: 'औरैया', state_id: stateMap['Uttar Pradesh'], lgd_code: 145 },
+    { name: 'Ayodhya (Faizabad)', name_local: 'अयोध्या', state_id: stateMap['Uttar Pradesh'], lgd_code: 151 },
+    { name: 'Azamgarh', name_local: 'आजमगढ़', state_id: stateMap['Uttar Pradesh'], lgd_code: 146 },
+    { name: 'Baghpat', name_local: 'बागपत', state_id: stateMap['Uttar Pradesh'], lgd_code: 147 },
+    { name: 'Bahraich', name_local: 'बहराइच', state_id: stateMap['Uttar Pradesh'], lgd_code: 148 },
+    { name: 'Ballia', name_local: 'बलिया', state_id: stateMap['Uttar Pradesh'], lgd_code: 149 },
+    { name: 'Balrampur', name_local: 'बलरामपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 150 },
+    { name: 'Banda', name_local: 'बांदा', state_id: stateMap['Uttar Pradesh'], lgd_code: 152 },
+    { name: 'Barabanki', name_local: 'बाराबंकी', state_id: stateMap['Uttar Pradesh'], lgd_code: 153 },
+    { name: 'Bareilly', name_local: 'बरेली', state_id: stateMap['Uttar Pradesh'], lgd_code: 154 },
+    { name: 'Basti', name_local: 'बस्ती', state_id: stateMap['Uttar Pradesh'], lgd_code: 156 },
+    { name: 'Bhadohi', name_local: 'भदोही', state_id: stateMap['Uttar Pradesh'], lgd_code: 173 },
+    { name: 'Bijnor', name_local: 'बिजनौर', state_id: stateMap['Uttar Pradesh'], lgd_code: 157 },
+    { name: 'Budaun', name_local: 'बदायूँ', state_id: stateMap['Uttar Pradesh'], lgd_code: 158 },
+    { name: 'Bulandshahr', name_local: 'बुलंदशहर', state_id: stateMap['Uttar Pradesh'], lgd_code: 159 },
+    { name: 'Chandauli', name_local: 'चंदौली', state_id: stateMap['Uttar Pradesh'], lgd_code: 160 },
+    { name: 'Chitrakoot', name_local: 'चित्रकूट', state_id: stateMap['Uttar Pradesh'], lgd_code: 161 },
+    { name: 'Deoria', name_local: 'देवरिया', state_id: stateMap['Uttar Pradesh'], lgd_code: 165 },
+    { name: 'Etah', name_local: 'एटा', state_id: stateMap['Uttar Pradesh'], lgd_code: 166 },
+    { name: 'Etawah', name_local: 'इटावा', state_id: stateMap['Uttar Pradesh'], lgd_code: 168 },
+    { name: 'Farrukhabad', name_local: 'फर्रुखाबाद', state_id: stateMap['Uttar Pradesh'], lgd_code: 169 },
+    { name: 'Fatehpur', name_local: 'फतेहपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 171 },
+    { name: 'Firozabad', name_local: 'फ़िरोज़ाबाद', state_id: stateMap['Uttar Pradesh'], lgd_code: 172 },
+    { name: 'Gautam Buddha Nagar (Noida)', name_local: 'गौतम बुद्ध नगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 174 },
+    { name: 'Ghaziabad', name_local: 'गाजियाबाद', state_id: stateMap['Uttar Pradesh'], lgd_code: 175 },
+    { name: 'Ghazipur', name_local: 'गाजीपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 176 },
+    { name: 'Gonda', name_local: 'गोंडा', state_id: stateMap['Uttar Pradesh'], lgd_code: 177 },
+    { name: 'Gorakhpur', name_local: 'गोरखपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 155 },
+    { name: 'Hamirpur', name_local: 'हमीरपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 179 },
+    { name: 'Hapur', name_local: 'हापुड़', state_id: stateMap['Uttar Pradesh'], lgd_code: 708 },
+    { name: 'Hardoi', name_local: 'हरदोई', state_id: stateMap['Uttar Pradesh'], lgd_code: 180 },
+    { name: 'Hathras', name_local: 'हाथरस', state_id: stateMap['Uttar Pradesh'], lgd_code: 181 },
+    { name: 'Jalaun', name_local: 'जालौन', state_id: stateMap['Uttar Pradesh'], lgd_code: 182 },
+    { name: 'Jaunpur', name_local: 'जौनपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 162 },
+    { name: 'Jhansi', name_local: 'झांसी', state_id: stateMap['Uttar Pradesh'], lgd_code: 183 },
+    { name: 'Kannauj', name_local: 'कन्नौज', state_id: stateMap['Uttar Pradesh'], lgd_code: 184 },
+    { name: 'Kanpur Dehat', name_local: 'कानपुर देहात', state_id: stateMap['Uttar Pradesh'], lgd_code: 185 },
+    { name: 'Kanpur Nagar', name_local: 'कानपुर नगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 164 },
+    { name: 'Kasganj', name_local: 'कासगंज', state_id: stateMap['Uttar Pradesh'], lgd_code: 706 },
+    { name: 'Kaushambi', name_local: 'कौशांबी', state_id: stateMap['Uttar Pradesh'], lgd_code: 186 },
+    { name: 'Kushinagar', name_local: 'कुशीनगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 187 },
+    { name: 'Lakhimpur Kheri', name_local: 'लखीमपुर खीरी', state_id: stateMap['Uttar Pradesh'], lgd_code: 188 },
+    { name: 'Lalitpur', name_local: 'ललितपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 189 },
+    { name: 'Lucknow', name_local: 'लखनऊ', state_id: stateMap['Uttar Pradesh'], lgd_code: 163 },
+    { name: 'Maharajganj', name_local: 'महराजगंज', state_id: stateMap['Uttar Pradesh'], lgd_code: 190 },
+    { name: 'Mahoba', name_local: 'महोबा', state_id: stateMap['Uttar Pradesh'], lgd_code: 191 },
+    { name: 'Mainpuri', name_local: 'मैनपुरी', state_id: stateMap['Uttar Pradesh'], lgd_code: 192 },
+    { name: 'Mathura', name_local: 'मथुरा', state_id: stateMap['Uttar Pradesh'], lgd_code: 193 },
+    { name: 'Mau', name_local: 'मऊ', state_id: stateMap['Uttar Pradesh'], lgd_code: 194 },
+    { name: 'Meerut', name_local: 'मेरठ', state_id: stateMap['Uttar Pradesh'], lgd_code: 195 },
+    { name: 'Mirzapur', name_local: 'मिर्जापुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 196 },
+    { name: 'Moradabad', name_local: 'मुरादाबाद', state_id: stateMap['Uttar Pradesh'], lgd_code: 197 },
+    { name: 'Muzaffarnagar', name_local: 'मुजफ्फरनगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 198 },
+    { name: 'Pilibhit', name_local: 'पीलीभीत', state_id: stateMap['Uttar Pradesh'], lgd_code: 199 },
+    { name: 'Pratapgarh', name_local: 'प्रतापगढ़', state_id: stateMap['Uttar Pradesh'], lgd_code: 200 },
+    { name: 'Prayagraj', name_local: 'प्रयागराज', state_id: stateMap['Uttar Pradesh'], lgd_code: 170 },
+    { name: 'Raebareli', name_local: 'रायबरेली', state_id: stateMap['Uttar Pradesh'], lgd_code: 201 },
+    { name: 'Rampur', name_local: 'रामपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 202 },
+    { name: 'Saharanpur', name_local: 'सहारनपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 203 },
+    { name: 'Sambhal', name_local: 'संभल', state_id: stateMap['Uttar Pradesh'], lgd_code: 709 },
+    { name: 'Sant Kabir Nagar', name_local: 'संत कबीर नगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 204 },
+    { name: 'Shahjahanpur', name_local: 'शाहजहांपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 205 },
+    { name: 'Shamli', name_local: 'शामली', state_id: stateMap['Uttar Pradesh'], lgd_code: 707 },
+    { name: 'Shravasti', name_local: 'श्रावस्ती', state_id: stateMap['Uttar Pradesh'], lgd_code: 206 },
+    { name: 'Siddharthnagar', name_local: 'सिद्धार्थनगर', state_id: stateMap['Uttar Pradesh'], lgd_code: 207 },
+    { name: 'Sitapur', name_local: 'सीतापुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 208 },
+    { name: 'Sonbhadra', name_local: 'सोनभद्र', state_id: stateMap['Uttar Pradesh'], lgd_code: 209 },
+    { name: 'Sultanpur', name_local: 'सुल्तानपुर', state_id: stateMap['Uttar Pradesh'], lgd_code: 176 },
+    { name: 'Unnao', name_local: 'उन्नाव', state_id: stateMap['Uttar Pradesh'], lgd_code: 210 },
+    { name: 'Varanasi', name_local: 'वाराणसी', state_id: stateMap['Uttar Pradesh'], lgd_code: 178 },
 
-  await Village.bulkCreate([
-    { name: 'Uppal', state_id: stateMap['Telangana'], district_id: tsDistMap['Hyderabad'], tehsil_id: tsTehsils[0].id, block_id: tsBlocks[0].id, latitude: 17.4065, longitude: 78.5590, population: 40000 },
-    { name: 'Hanamkonda', state_id: stateMap['Telangana'], district_id: tsDistMap['Warangal'], tehsil_id: tsTehsils[1].id, block_id: tsBlocks[1].id, latitude: 17.9835, longitude: 79.5760, population: 25000 },
-  ]);
+    // Uttarakhand
+    { name: 'Dehradun', name_local: 'देहरादून', state_id: stateMap['Uttarakhand'], lgd_code: 52 },
+    { name: 'Haridwar', name_local: 'हरिद्वार', state_id: stateMap['Uttarakhand'], lgd_code: 53 },
+    { name: 'Nainital', name_local: 'नैनीताल', state_id: stateMap['Uttarakhand'], lgd_code: 54 },
+    { name: 'Udham Singh Nagar', name_local: 'ऊधम सिंह नगर', state_id: stateMap['Uttarakhand'], lgd_code: 58 },
 
-  // ── KARNATAKA ──
-  const kaDistricts = await District.bulkCreate([
-    { name: 'Bengaluru Urban', name_local: 'ಬೆಂಗಳೂರು ನಗರ', state_id: stateMap['Karnataka'], lgd_code: 572 },
-    { name: 'Mysuru', name_local: 'ಮೈಸೂರು', state_id: stateMap['Karnataka'], lgd_code: 580 },
-  ]);
-  const kaDistMap = {};
-  kaDistricts.forEach(d => { kaDistMap[d.name] = d.id; });
+    // West Bengal
+    { name: 'Kolkata', name_local: 'কলকাতা', state_id: stateMap['West Bengal'], lgd_code: 326 },
+    { name: 'Howrah', name_local: 'হাওড়া', state_id: stateMap['West Bengal'], lgd_code: 323 },
+    { name: 'North 24 Parganas', name_local: 'উত্তর ২৪ পরগনা', state_id: stateMap['West Bengal'], lgd_code: 331 },
+    { name: 'Darjeeling', name_local: 'দার্জিলিং', state_id: stateMap['West Bengal'], lgd_code: 317 },
+  ];
 
-  const kaTehsils = await Tehsil.bulkCreate([
-    { name: 'Bengaluru North', district_id: kaDistMap['Bengaluru Urban'] },
-    { name: 'Bengaluru South', district_id: kaDistMap['Bengaluru Urban'] },
-    { name: 'Mysuru', district_id: kaDistMap['Mysuru'] },
-  ]);
+  // Chunk helper function
+  async function batchBulkCreate(Model, dataArray, chunkSize = 20) {
+    const results = [];
+    for (let i = 0; i < dataArray.length; i += chunkSize) {
+      const chunk = dataArray.slice(i, i + chunkSize);
+      const created = await Model.bulkCreate(chunk);
+      results.push(...created);
+    }
+    return results;
+  }
 
-  const kaBlocks = await Block.bulkCreate([
-    { name: 'Yelahanka Block', district_id: kaDistMap['Bengaluru Urban'] },
-    { name: 'Nanjangud Block', district_id: kaDistMap['Mysuru'] },
-  ]);
+  const districts = await batchBulkCreate(District, districtsData);
+  const distMap = {};
+  districts.forEach(d => { distMap[d.name] = d.id; });
 
-  await Village.bulkCreate([
-    { name: 'Yelahanka', state_id: stateMap['Karnataka'], district_id: kaDistMap['Bengaluru Urban'], tehsil_id: kaTehsils[0].id, block_id: kaBlocks[0].id, latitude: 13.1007, longitude: 77.5963, population: 50000 },
-    { name: 'Nanjangud', state_id: stateMap['Karnataka'], district_id: kaDistMap['Mysuru'], tehsil_id: kaTehsils[2].id, block_id: kaBlocks[1].id, latitude: 12.1161, longitude: 76.6831, population: 18000 },
-  ]);
+  // 3. TEHSILS AND BLOCKS FOR ALL DISTRICTS
+  const tehsilsList = [];
+  const blocksList = [];
 
-  console.log('  ✓ States & UTs: 36, Districts: ~30, Tehsils: ~40, Blocks: ~30, Villages: ~35');
+  districts.forEach(d => {
+    // Generate 2 administrative tehsils and blocks per district automatically
+    tehsilsList.push(
+      { name: `${d.name} Sadar`, district_id: d.id },
+      { name: `${d.name} North/Urban`, district_id: d.id }
+    );
+    blocksList.push(
+      { name: `${d.name} Central Block`, district_id: d.id },
+      { name: `${d.name} Rural Block`, district_id: d.id }
+    );
+  });
+
+  const tehsils = await batchBulkCreate(Tehsil, tehsilsList);
+  const blocks = await batchBulkCreate(Block, blocksList);
+
+  // 4. VILLAGES FOR ALL DISTRICTS & TEHSILS/BLOCKS
+  const villagesData = [];
+  districts.forEach((d, idx) => {
+    const tehsil1 = tehsils[idx * 2];
+    const tehsil2 = tehsils[idx * 2 + 1];
+    const block1 = blocks[idx * 2];
+    const block2 = blocks[idx * 2 + 1];
+
+    if (tehsil1 && tehsil2 && block1 && block2) {
+      villagesData.push(
+        {
+          name: `${d.name} Town Village`,
+          state_id: d.state_id,
+          district_id: d.id,
+          tehsil_id: tehsil1.id,
+          block_id: block1.id,
+          latitude: 20.5937,
+          longitude: 78.9629,
+          population: 15000,
+        },
+        {
+          name: `${d.name} Rural Area`,
+          state_id: d.state_id,
+          district_id: d.id,
+          tehsil_id: tehsil2.id,
+          block_id: block2.id,
+          latitude: 20.5937,
+          longitude: 78.9629,
+          population: 8500,
+        }
+      );
+    }
+  });
+
+  await batchBulkCreate(Village, villagesData);
+
+  console.log(`  ✓ ${states.length} States & UTs created`);
+  console.log(`  ✓ ${districts.length} Districts created`);
+  console.log(`  ✓ ${tehsils.length} Tehsils created`);
+  console.log(`  ✓ ${blocks.length} Blocks created`);
+  console.log(`  ✓ ${villagesData.length} Villages created`);
 }

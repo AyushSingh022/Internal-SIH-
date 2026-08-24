@@ -7,7 +7,7 @@ import toast from 'react-hot-toast';
 
 export default function SignupPage() {
   const { signup } = useAuth();
-  const { t } = useLanguage();
+  const { t, language, setLanguage } = useLanguage();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     full_name: '', email: '', mobile: '', password: '', confirm_password: '',
@@ -41,7 +41,7 @@ export default function SignupPage() {
     }
     setLoading(true);
     try {
-      await signup(form);
+      await signup({ ...form, preferred_language: language });
       toast.success('Account created!');
       navigate('/dashboard');
     } catch (err) {
@@ -54,8 +54,33 @@ export default function SignupPage() {
 
   const update = (key, val) => setForm({ ...form, [key]: val });
 
+  const handleLangToggle = (lang) => {
+    setLanguage(lang);
+    setForm(prev => ({ ...prev, preferred_language: lang }));
+  };
+
   return (
     <div className="auth-card animate-in" style={{ maxWidth: 480 }}>
+      {/* English / Hindi Language Toggle for Signup */}
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginBottom: '1.25rem' }}>
+        <button
+          type="button"
+          className={`btn btn-sm ${language === 'en' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => handleLangToggle('en')}
+          style={{ padding: '0.35rem 1rem', fontSize: '0.85rem' }}
+        >
+          English
+        </button>
+        <button
+          type="button"
+          className={`btn btn-sm ${language === 'hi' ? 'btn-primary' : 'btn-ghost'}`}
+          onClick={() => handleLangToggle('hi')}
+          style={{ padding: '0.35rem 1rem', fontSize: '0.85rem' }}
+        >
+          हिन्दी
+        </button>
+      </div>
+
       <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
         <span style={{ fontSize: '2.5rem' }}>🚀</span>
       </div>

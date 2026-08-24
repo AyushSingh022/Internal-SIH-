@@ -5,10 +5,10 @@
   "main": "src/server.js",
   "type": "module",
   "scripts": {
-    "dev": "bun --watch src/server.js",
-    "start": "bun src/server.js",
-    "seed": "bun seeds/index.js",
-    "import-schemes": "bun seeds/schemes.js"
+    "dev": "node --watch src/server.js",
+    "start": "node src/server.js",
+    "seed": "node seeds/index.js",
+    "import-schemes": "node seeds/schemes.js"
   },
   "dependencies": {
     "@google/generative-ai": "^0.24.1",

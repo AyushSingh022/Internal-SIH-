@@ -123,7 +123,7 @@ IMPORTANT RULES:
       ...parsed,
       _meta: {
         source: 'ai_generated',
-        model: 'gemini-3.6-flash',
+        model: 'gemini-1.5-flash',
         disclaimer: 'This analysis is AI-generated and should be verified with local authorities and market research.',
         generated_at: new Date().toISOString(),
       },

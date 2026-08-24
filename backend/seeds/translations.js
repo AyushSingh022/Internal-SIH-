@@ -28,9 +28,9 @@ export async function seedTranslations() {
   // English translations
   const en = {
     // App
-    'app.title': 'Business Advisory Platform',
-    'app.subtitle': 'AI-Driven Hyper-Local Business Advisory for Rural Micro-Entrepreneurs',
-    'app.tagline': 'Empowering rural entrepreneurs with smart business insights',
+    'app.title': 'GramVyapar AI',
+    'app.subtitle': 'Fair Alternate Credit & Business Feasibility for Rural India',
+    'app.tagline': 'Empowering 63M+ rural Indian entrepreneurs with smart AI insights',
 
     // Nav
     'nav.home': 'Home',
@@ -302,16 +302,253 @@ export async function seedTranslations() {
     'recommendation.nextSteps': 'अपेक्षित अगले कदम',
   };
 
-  // Bulk insert translations
-  const enRows = Object.entries(en).map(([key, value]) => ({
-    language_code: 'en', translation_key: key, translation_value: value,
-  }));
-  const hiRows = Object.entries(hi).map(([key, value]) => ({
-    language_code: 'hi', translation_key: key, translation_value: value,
-  }));
+  // Bengali translations
+  const bn = {
+    'app.title': 'ব্যবসায়িক পরামর্শদাতা প্ল্যাটফর্ম',
+    'app.subtitle': 'গ্রামীণ ক্ষুদ্র-উদ্যোক্তাদের জন্য AI-চালিত স্থানীয় ব্যবসা পরামর্শদাতা',
+    'app.tagline': 'স্মার্ট ব্যবসা তথ্যের মাধ্যমে গ্রামীণ উদ্যোক্তাদের ক্ষমতায়ন',
+    'nav.home': 'হোম', 'nav.dashboard': 'ড্যাশবোর্ড', 'nav.newAnalysis': 'নতুন বিশ্লেষণ', 'nav.schemes': 'সরকারি প্রকল্প',
+    'nav.calculator': 'আর্থিক ক্যালকুলেটর', 'nav.myReports': 'আমার রিপোর্ট', 'nav.logout': 'লগআউট', 'nav.login': 'লগইন',
+    'nav.signup': 'সাইন আপ', 'nav.language': 'ভাষা',
+    'auth.login': 'লগইন', 'auth.signup': 'সাইন আপ', 'auth.email': 'ইমেল ঠিকানা', 'auth.password': 'পাসওয়ার্ড',
+    'auth.confirmPassword': 'পাসওয়ার্ড নিশ্চিত করুন', 'auth.fullName': 'পূর্ণ নাম', 'auth.mobile': 'মোবাইল নম্বর',
+    'auth.loginBtn': 'লগইন', 'auth.signupBtn': 'একাউন্ট তৈরি করুন', 'auth.noAccount': 'একাউন্ট নেই?',
+    'auth.hasAccount': 'ইতিমধ্যে একাউন্ট আছে?', 'auth.welcome': 'স্বাগতম', 'auth.createAccount': 'আপনার একাউন্ট তৈরি করুন',
+    'location.title': 'আপনার অবস্থান নির্বাচন করুন', 'location.state': 'রাজ্য', 'location.district': 'জেলা',
+    'location.tehsil': 'তহসিল / উপ-জেলা', 'location.block': 'ব্লক', 'location.village': 'গ্রাম',
+    'location.selectState': 'রাজ্য নির্বাচন করুন', 'location.selectDistrict': 'জেলা নির্বাচন করুন',
+    'location.selectTehsil': 'তহসিল নির্বাচন করুন', 'location.selectBlock': 'ব্লক নির্বাচন করুন', 'location.selectVillage': 'গ্রাম নির্বাচন করুন',
+    'business.title': 'ব্যবসায়িক তথ্য', 'business.category': 'ব্যবসার বিভাগ', 'business.selectCategory': 'ব্যবসার বিভাগ নির্বাচন করুন',
+    'business.availableCapital': 'লভ্য মূলধন (₹)', 'business.enterCapital': 'আপনার উপলব্ধ মূলধন লিখুন', 'business.searchRadius': 'অনুসন্ধানের ব্যাসার্ধ (কিমি)',
+    'analysis.title': 'ব্যবসার সম্ভাব্যতা বিশ্লেষণ', 'analysis.generate': 'বিশ্লেষণ তৈরি করুন', 'analysis.generating': 'AI বিশ্লেষণ তৈরি হচ্ছে...',
+    'analysis.step1': 'অবস্থান নির্বাচন করুন', 'analysis.step2': 'ব্যবসার বিবরণ', 'analysis.step3': 'ফলাফল দেখুন',
+    'dashboard.title': 'বিজনেস ড্যাশবোর্ড', 'dashboard.welcome': 'স্বাগতম', 'dashboard.newAnalysis': 'নতুন ব্যবসা বিশ্লেষণ',
+    'dashboard.financialCalc': 'আর্থিক ক্যালকুলেটর', 'dashboard.govSchemes': 'সরকারি প্রকল্প', 'dashboard.myReports': 'আমার রিপোর্ট',
+    'dashboard.recentReports': 'সাম্প্রতিক রিপোর্ট', 'dashboard.noReports': 'এখনও কোনো রিপোর্ট নেই। নতুন বিশ্লেষণ শুরু করুন!',
+    'dashboard.viewReport': 'রিপোর্ট দেখুন', 'dashboard.score': 'সম্ভাব্যতা স্কোর',
+    'common.loading': 'লোড হচ্ছে...', 'common.next': 'পরবর্তী', 'common.previous': 'পূর্ববর্তী', 'common.submit': 'জমা দিন',
+    'common.disclaimer': 'AI-উত্পাদিত তথ্য। স্থানীয় কর্তৃপক্ষের সাথে যাচাই করুন।',
+  };
 
-  await Translation.bulkCreate([...enRows, ...hiRows]);
+  // Telugu translations
+  const te = {
+    'app.title': 'వ్యాపార సలహా వేదిక',
+    'app.subtitle': 'గ్రామీణ సూక్ష్మ పారిశ్రామికవేత్తల కోసం AI-ఆధారిత వ్యాపార సలహాదారు',
+    'app.tagline': 'స్మార్ట్ బిజినెస్ ఇన్సైట్స్తో గ్రామీణ పారిశ్రామికవేత్తలను సాధికారత చేయడం',
+    'nav.home': 'హోమ్', 'nav.dashboard': 'డాష్‌బోర్డ్', 'nav.newAnalysis': 'కొత్త విశ్లేషణ', 'nav.schemes': 'ప్రభుత్వ పథకాలు',
+    'nav.calculator': 'ఆర్థిక క్యాలిక్యులేటర్', 'nav.myReports': 'నా నివేదికలు', 'nav.logout': 'లాగౌట్', 'nav.login': 'లాగిన్',
+    'nav.signup': 'సైన్ అప్', 'nav.language': 'భాష',
+    'auth.login': 'లాగిన్', 'auth.signup': 'సైన్ అప్', 'auth.email': 'ఇమెయిల్ చిరునామా', 'auth.password': 'పాస్ వర్డ్',
+    'auth.confirmPassword': 'పాస్‌వర్డ్‌ను నిర్ధారించండి', 'auth.fullName': 'పూర్తి పేరు', 'auth.mobile': 'మొబైల్ సంఖ్య',
+    'auth.loginBtn': 'లాగిన్', 'auth.signupBtn': 'ఖాతాను సృష్టించండి', 'auth.noAccount': 'ఖాతా లేదా?',
+    'auth.hasAccount': 'ఇప్పటికే ఖాతా ఉందా?', 'auth.welcome': 'స్వాగతం', 'auth.createAccount': 'మీ ఖాతాను సృష్టించండి',
+    'location.title': 'మీ స్థానాన్ని ఎంచుకోండి', 'location.state': 'రాష్ట్రం', 'location.district': 'జిల్లా',
+    'location.tehsil': 'తహసీల్ / ఉప-జిల్లా', 'location.block': 'బ్లాక్', 'location.village': 'గ్రామం',
+    'location.selectState': 'రాష్ట్రాన్ని ఎంచుకోండి', 'location.selectDistrict': 'జిల్లాను ఎంచుకోండి',
+    'location.selectTehsil': 'తహసీల్‌ను ఎంచుకోండి', 'location.selectBlock': 'బ్లాక్‌ను ఎంచుకోండి', 'location.selectVillage': 'గ్రామాన్ని ఎంచుకోండి',
+    'business.title': 'వ్యాపార సమాచారం', 'business.category': 'వ్యాపార వర్గం', 'business.selectCategory': 'వ్యాపార వర్గాన్ని ఎంచుకోండి',
+    'business.availableCapital': 'అందుబాటులో ఉన్న మూలధనం (₹)', 'business.enterCapital': 'మీ మూలధనాన్ని నమోదు చేయండి', 'business.searchRadius': 'శోధన వ్యాసార్థం (కిమీ)',
+    'analysis.title': 'వ్యాపార సాధ్యాసాధ్యాల విశ్లేషణ', 'analysis.generate': 'విశ్లేషణను రూపొందించండి', 'analysis.generating': 'AI విశ్లేషణ ఉత్పత్తి అవుతోంది...',
+    'analysis.step1': 'స్థానాన్ని ఎంచుకోండి', 'analysis.step2': 'వ్యాపార వివరాలు', 'analysis.step3': 'ఫలితాలను చూడండి',
+    'dashboard.title': 'వ్యాపార డాష్‌బోర్డ్', 'dashboard.welcome': 'స్వాగతం', 'dashboard.newAnalysis': 'కొత్త వ్యాపార విశ్లేషణ',
+    'dashboard.financialCalc': 'ఆర్థిక క్యాలిక్యులేటర్', 'dashboard.govSchemes': 'ప్రభుత్వ పథకాలు', 'dashboard.myReports': 'నా నివేదికలు',
+    'dashboard.recentReports': 'ఇటీవలి నివేదికలు', 'dashboard.noReports': 'ఇంకా నివేదికలు లేవు. కొత్త విశ్లేషణను ప్రారంభించండి!',
+    'dashboard.viewReport': 'నివేదికను చూడండి', 'dashboard.score': 'సాధ్యాసాధ్య స్కోరు',
+    'common.loading': 'లోడ్ అవుతోంది...', 'common.next': 'తరువాత', 'common.previous': 'క్రితం', 'common.submit': 'సమర్పించండి',
+    'common.disclaimer': 'AI-జనరేటెడ్ సమాచారం. స్థానిక అధికారులతో సరిచూసుకోండి.',
+  };
 
-  console.log(`  ✓ ${Object.keys(en).length} English + ${Object.keys(hi).length} Hindi translations created`);
+  // Marathi translations
+  const mr = {
+    'app.title': 'व्यवसाय सल्लागार मंच',
+    'app.subtitle': 'ग्रामीण सूक्ष्म उद्योजकांसाठी AI-संचालित व्यवसाय सल्लागार',
+    'app.tagline': 'ग्रामीण उद्योजकांना स्मार्ट व्यवसाय माहितीद्वारे सक्षम करणे',
+    'nav.home': 'होम', 'nav.dashboard': 'डॅशबोर्ड', 'nav.newAnalysis': 'नवीन विश्लेषण', 'nav.schemes': 'शासकीय योजना',
+    'nav.calculator': 'आर्थिक कॅल्क्युलेटर', 'nav.myReports': 'माझे अहवाल', 'nav.logout': 'लॉगआउट', 'nav.login': 'लॉगिन',
+    'nav.signup': 'साइन अप', 'nav.language': 'भाषा',
+    'auth.login': 'लॉगिन', 'auth.signup': 'साइन अप', 'auth.email': 'ईमेल पत्ता', 'auth.password': 'पासवर्ड',
+    'auth.confirmPassword': 'पासवर्डची पुष्टी करा', 'auth.fullName': 'पूर्ण नाव', 'auth.mobile': 'मोबाइल नंबर',
+    'auth.loginBtn': 'लॉगिन', 'auth.signupBtn': 'खाते तयार करा', 'auth.noAccount': 'खाते नाही?',
+    'auth.hasAccount': 'आधीच खाते आहे?', 'auth.welcome': 'स्वागत आहे', 'auth.createAccount': 'तुमचे खाते तयार करा',
+    'location.title': 'तुमचे स्थान निवडा', 'location.state': 'राज्य', 'location.district': 'जिल्हा',
+    'location.tehsil': 'तहसील / उप-जिल्हा', 'location.block': 'ब्लॉक', 'location.village': 'गाव',
+    'location.selectState': 'राज्य निवडा', 'location.selectDistrict': 'जिल्हा निवडा',
+    'location.selectTehsil': 'तहसील निवडा', 'location.selectBlock': 'ब्लॉक निवडा', 'location.selectVillage': 'गाव निवडा',
+    'business.title': 'व्यवसाय माहिती', 'business.category': 'व्यवसाय श्रेणी', 'business.selectCategory': 'व्यवसाय श्रेणी निवडा',
+    'business.availableCapital': 'उपलब्ध भांडवल (₹)', 'business.enterCapital': 'तुमचे उपलब्ध भांडवल प्रविष्ट करा', 'business.searchRadius': 'शोधाची त्रिज्या (किमी)',
+    'analysis.title': 'व्यवसाय संभाव्यता विश्लेषण', 'analysis.generate': 'विश्लेषण तयार करा', 'analysis.generating': 'AI विश्लेषण तयार होत आहे...',
+    'analysis.step1': 'स्थान निवडा', 'analysis.step2': 'व्यवसाय तपशील', 'analysis.step3': 'निकाल पहा',
+    'dashboard.title': 'व्यवसाय डॅशबोर्ड', 'dashboard.welcome': 'स्वागत आहे', 'dashboard.newAnalysis': 'नवीन व्यवसाय विश्लेषण',
+    'dashboard.financialCalc': 'आर्थिक कॅल्क्युलेटर', 'dashboard.govSchemes': 'शासकीय योजना', 'dashboard.myReports': 'माझे अहवाल',
+    'dashboard.recentReports': 'अलीकडील अहवाल', 'dashboard.noReports': 'अद्याप कोणतेही अहवाल नाहीत. नवीन विश्लेषण सुरू करा!',
+    'dashboard.viewReport': 'अहवाल पहा', 'dashboard.score': 'संभाव्यता स्कोर',
+    'common.loading': 'लोड होत आहे...', 'common.next': 'पुढील', 'common.previous': 'मागील', 'common.submit': 'सबमिट करा',
+    'common.disclaimer': 'AI-जनरेट केलेली माहिती. स्थानिक प्राधिकरणांशी पडताळणी करा.',
+  };
+
+  // Tamil translations
+  const ta = {
+    'app.title': 'வணிக ஆலோசனை தளம்',
+    'app.subtitle': 'கிராமப்புற சிறு தொழில்முனைவோருக்கான AI-இயங்கும் வணிக ஆலோசகர்',
+    'app.tagline': 'கிராமப்புற தொழில்முனைவோரை ஸ்மார்ட் வணிக அறிவால் வலுப்படுத்துதல்',
+    'nav.home': 'முகப்பு', 'nav.dashboard': 'டாஷ்போர்டு', 'nav.newAnalysis': 'புதிய பகுப்பாய்வு', 'nav.schemes': 'அரசு திட்டங்கள்',
+    'nav.calculator': 'நிதி கணிப்பான்', 'nav.myReports': 'எனது அறிக்கைகள்', 'nav.logout': 'வெளியேறு', 'nav.login': 'லாகின்',
+    'nav.signup': 'பதிவு செய்', 'nav.language': 'மொழி',
+    'auth.login': 'லாகின்', 'auth.signup': 'பதிவு செய்', 'auth.email': 'மின்னஞ்சல் முகவரி', 'auth.password': 'கடவுச்சொல்',
+    'auth.confirmPassword': 'கடவுச்சொல்லை உறுதிசெய்', 'auth.fullName': 'முழு பெயர்', 'auth.mobile': 'மொபைல் எண்',
+    'auth.loginBtn': 'லாகின்', 'auth.signupBtn': 'கணக்கை உருவாக்கு', 'auth.noAccount': 'கணக்கு இல்லையா?',
+    'auth.hasAccount': 'ஏற்கனவே கணக்கு உள்ளதா?', 'auth.welcome': 'வரவேற்கிறோம்', 'auth.createAccount': 'உங்கள் கணக்கை உருவாக்குங்கள்',
+    'location.title': 'உங்கள் இருப்பிடத்தை தேர்ந்தெடுக்கவும்', 'location.state': 'மாநிலம்', 'location.district': 'மாவட்டம்',
+    'location.tehsil': 'வட்டம் / தாலுகா', 'location.block': 'ஒன்றியம்', 'location.village': 'கிராமம்',
+    'location.selectState': 'மாநிலத்தை தேர்ந்தெடு', 'location.selectDistrict': 'மாவட்டத்தை தேர்ந்தெடு',
+    'location.selectTehsil': 'தாலுகாவை தேர்ந்தெடு', 'location.selectBlock': 'ஒன்றியத்தை தேர்ந்தெடு', 'location.selectVillage': 'கிராமத்தை தேர்ந்தெடு',
+    'business.title': 'வணிக விவரங்கள்', 'business.category': 'வணிக வகை', 'business.selectCategory': 'வகை தேர்ந்தெடுக்கவும்',
+    'business.availableCapital': 'கிடைக்கும் மூலதனம் (₹)', 'business.enterCapital': 'மூலதனத்தை உள்ளிடவும்', 'business.searchRadius': 'தேடல் ஆரம் (கிமீ)',
+    'analysis.title': 'வணிக சாத்தியக்கூறு பகுப்பாய்வு', 'analysis.generate': 'பகுப்பாய்வு உருவாக்கு', 'analysis.generating': 'AI பகுப்பாய்வு உருவாகிறது...',
+    'analysis.step1': 'இருப்பிடம் தேர்ந்தெடு', 'analysis.step2': 'வணிக விவரங்கள்', 'analysis.step3': 'முடிவுகளை காண்',
+    'dashboard.title': 'வணிக டாஷ்போர்டு', 'dashboard.welcome': 'வரவேற்கிறோம்', 'dashboard.newAnalysis': 'புதிய வணிக பகுப்பாய்வு',
+    'dashboard.financialCalc': 'நிதி கணிப்பான்', 'dashboard.govSchemes': 'அரசு திட்டங்கள்', 'dashboard.myReports': 'எனது அறிக்கைகள்',
+    'dashboard.recentReports': 'சமீபத்திய அறிக்கைகள்', 'dashboard.noReports': 'அறிக்கைகள் எதுவும் இல்லை. புதிய பகுப்பாய்வை தொடங்குங்கள்!',
+    'dashboard.viewReport': 'அறிக்கை காண்', 'dashboard.score': 'சாத்தியக்கூறு மதிப்பெண்',
+    'common.loading': 'ஏற்றப்படுகிறது...', 'common.next': 'அடுத்து', 'common.previous': 'முந்தைய', 'common.submit': 'சமர்ப்பி',
+    'common.disclaimer': 'AI-உருவாக்கப்பட்ட தகவல். உள்ளூர் அதிகாரிகளிடம் சரிபார்க்கவும்.',
+  };
+
+  // Gujarati translations
+  const gu = {
+    'app.title': 'બિઝનેસ એડવાઇઝરી પ્લેટફોર્મ',
+    'app.subtitle': 'ગ્રામીણ સૂક્ષ્મ સાહસિકો માટે AI-સંચાલિત વ્યવસાય સલાહકાર',
+    'app.tagline': 'સ્માર્ટ બિઝનેસ ઇનસાઇટ્સ સાથે ગ્રામીણ સાહસિકોને સશક્ત બનાવવા',
+    'nav.home': 'હોમ', 'nav.dashboard': 'ડેશબોર્ડ', 'nav.newAnalysis': 'નવું વિશ્લેષણ', 'nav.schemes': 'સરકારી યોજનાઓ',
+    'nav.calculator': 'નાણાકીય કેલ્ક્યુલેટર', 'nav.myReports': 'મારા અહેવાલો', 'nav.logout': 'લોગઆઉટ', 'nav.login': 'લોગિન',
+    'nav.signup': 'સાઇન અપ', 'nav.language': 'ભાષા',
+    'auth.login': 'લોગિન', 'auth.signup': 'સાઇન અપ', 'auth.email': 'ઇમેઇલ સરનામું', 'auth.password': 'પાસવર્ડ',
+    'auth.confirmPassword': 'પાસવર્ડની પુષ્ટિ કરો', 'auth.fullName': 'પૂરું નામ', 'auth.mobile': 'મોબાઇલ નંબર',
+    'auth.loginBtn': 'લોગિન', 'auth.signupBtn': 'ખાતું બનાવો', 'auth.noAccount': 'ખાતું નથી?',
+    'auth.hasAccount': 'પહેલેથી જ ખાતું છે?', 'auth.welcome': 'સ્વાગત છે', 'auth.createAccount': 'તમારું ખાતું બનાવો',
+    'location.title': 'તમારું સ્થાન પસંદ કરો', 'location.state': 'રાજ્ય', 'location.district': 'જીલ્લો',
+    'location.tehsil': 'તાલુકો', 'location.block': 'બ્લોક', 'location.village': 'ગામ',
+    'location.selectState': 'રાજ્ય પસંદ કરો', 'location.selectDistrict': 'જીલ્લો પસંદ કરો',
+    'location.selectTehsil': 'તાલુકો પસંદ કરો', 'location.selectBlock': 'બ્લોક પસંદ કરો', 'location.selectVillage': 'ગામ પસંદ કરો',
+    'business.title': 'વ્યવસાય માહિતી', 'business.category': 'વ્યવસાય શ્રેણી', 'business.selectCategory': 'શ્રેણી પસંદ કરો',
+    'business.availableCapital': 'ઉપલબ્ધ મૂડી (₹)', 'business.enterCapital': 'તમારી મૂડી દાખલ કરો', 'business.searchRadius': 'શોધ ત્રિજ્યા (કિમી)',
+    'analysis.title': 'વ્યવસાય સંભવિતતા વિશ્લેષણ', 'analysis.generate': 'વિશ્લેષણ બનાવો', 'analysis.generating': 'AI વિશ્લેષણ બની રહ્યું છે...',
+    'analysis.step1': 'સ્થાન પસંદ કરો', 'analysis.step2': 'વ્યવસાય વિગતો', 'analysis.step3': 'પરિણામો જુઓ',
+    'dashboard.title': 'વ્યવસાય ડેશબોર્ડ', 'dashboard.welcome': 'સ્વાગત છે', 'dashboard.newAnalysis': 'નવું વિશ્લેષણ',
+    'dashboard.financialCalc': 'નાણાકીય કેલ્ક્યુલેટર', 'dashboard.govSchemes': 'સરકારી યોજનાઓ', 'dashboard.myReports': 'મારા અહેવાલો',
+    'dashboard.recentReports': 'તાજેતરના અહેવાલો', 'dashboard.noReports': 'હજુ સુધી કોઈ અહેવાલ નથી. નવું વિશ્લેષણ શરૂ કરો!',
+    'dashboard.viewReport': 'અહેવાલ જુઓ', 'dashboard.score': 'સંભવિતતા સ્કોર',
+    'common.loading': 'લોડ થઈ રહ્યું છે...', 'common.next': 'આગળ', 'common.previous': 'પાછળ', 'common.submit': 'સબમિટ કરો',
+    'common.disclaimer': 'AI-જનરેટેડ માહિતી. સ્થાનિક સત્તાવાળાઓ સાથે ચકાસણી કરો.',
+  };
+
+  // Kannada translations
+  const kn = {
+    'app.title': 'ವ್ಯಾಪಾರ ಸಲಹಾ ವೇದಿಕೆ',
+    'app.subtitle': 'ಗ್ರಾಮೀಣ ಸೂಕ್ಷ್ಮ ಉದ್ಯಮಿಗಳಿಗಾಗಿ AI-ಚಾಲಿತ ಉದ್ಯಮ ಸಲಹೆಗಾರ',
+    'app.tagline': 'ಸ್ಮಾರ್ಟ್ ಉದ್ಯಮ ಮಾಹಿತಿಯೊಂದಿಗೆ ಗ್ರಾಮೀಣ ಉದ್ಯಮಿಗಳನ್ನು ಸಬಲೀಕರಣಗೊಳಿಸುವುದು',
+    'nav.home': 'ಹೋಮ್', 'nav.dashboard': 'ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', 'nav.newAnalysis': 'ಹೊಸ ವಿಶ್ಲೇಷಣೆ', 'nav.schemes': 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು',
+    'nav.calculator': 'ಹಣಕಾಸು ಕ್ಯಾಲ್ಕುಲೇಟರ್', 'nav.myReports': 'ನನ್ನ ವರದಿಗಳು', 'nav.logout': 'ಲಾಗ್‌ಔಟ್', 'nav.login': 'ಲಾಗಿನ್',
+    'nav.signup': 'ಸೈನ್ ಅಪ್', 'nav.language': 'ಭಾಷೆ',
+    'auth.login': 'ಲಾಗಿನ್', 'auth.signup': 'ಸೈನ್ ಅಪ್', 'auth.email': 'ಇಮೇಲ್ ವಿಳಾಸ', 'auth.password': 'ಪಾಸ್‌ವರ್ಡ್',
+    'auth.confirmPassword': 'ಪಾಸ್‌ವರ್ಡ್ ಖಚಿತಪಡಿಸಿ', 'auth.fullName': 'ಪೂರ್ಣ ಹೆಸರು', 'auth.mobile': 'ಮೊಬೈಲ್ ಸಂಖ್ಯೆ',
+    'auth.loginBtn': 'ಲಾಗಿನ್', 'auth.signupBtn': 'ಖಾತೆ ರಚಿಸಿ', 'auth.noAccount': 'ಖಾತೆ ಇಲ್ಲವೇ?',
+    'auth.hasAccount': 'ಈಗಾಗಲೇ ಖಾತೆ ಇದೆಯೇ?', 'auth.welcome': 'ಸ್ವಾಗತ', 'auth.createAccount': 'ನಿಮ್ಮ ಖಾತೆ ರಚಿಸಿ',
+    'location.title': 'ನಿಮ್ಮ ಸ್ಥಳವನ್ನು ಆಯ್ಕೆಮಾಡಿ', 'location.state': 'ರಾಜ್ಯ', 'location.district': 'ಜಿಲ್ಲೆ',
+    'location.tehsil': 'ತಾಲೂಕು', 'location.block': 'ಬ್ಲಾಕ್', 'location.village': 'ಗ್ರಾಮ',
+    'location.selectState': 'ರಾಜ್ಯ ಆಯ್ಕೆಮಾಡಿ', 'location.selectDistrict': 'ಜಿಲ್ಲೆ ಆಯ್ಕೆಮಾಡಿ',
+    'location.selectTehsil': 'ತಾಲೂಕು ಆಯ್ಕೆಮಾಡಿ', 'location.selectBlock': 'ಬ್ಲಾಕ್ ಆಯ್ಕೆಮಾಡಿ', 'location.selectVillage': 'ಗ್ರಾಮ ಆಯ್ಕೆಮಾಡಿ',
+    'business.title': 'ವ್ಯಾಪಾರ ಮಾಹಿತಿ', 'business.category': 'ವ್ಯಾಪಾರ ವರ್ಗ', 'business.selectCategory': 'ವರ್ಗ ಆಯ್ಕೆಮಾಡಿ',
+    'business.availableCapital': 'ಲಭ್ಯವಿರುವ ಬಂಡವಾಳ (₹)', 'business.enterCapital': 'ನಿಮ್ಮ ಬಂಡವಾಳವನ್ನು ನಮೂದಿಸಿ', 'business.searchRadius': 'ಹುಡುಕಾಟದ ತ್ರಿಜ್ಯ (ಕಿಮೀ)',
+    'analysis.title': 'ವ್ಯಾಪಾರ ಸಾಧ್ಯತೆಯ ವಿಶ್ಲೇಷಣೆ', 'analysis.generate': 'ವಿಶ್ಲೇಷಣೆ ರಚಿಸಿ', 'analysis.generating': 'AI ವಿಶ್ಲೇಷಣೆ ರಚಿಸಲಾಗುತ್ತಿದೆ...',
+    'analysis.step1': 'ಸ್ಥಳ ಆಯ್ಕೆಮಾಡಿ', 'analysis.step2': 'ವ್ಯಾಪಾರದ ವಿವರಗಳು', 'analysis.step3': 'ಫಲಿತಾಂಶಗಳನ್ನು ವೀಕ್ಷಿಸಿ',
+    'dashboard.title': 'ವ್ಯಾಪಾರ ಡ್ಯಾಶ್‌ಬೋರ್ಡ್', 'dashboard.welcome': 'ಸ್ವಾಗತ', 'dashboard.newAnalysis': 'ಹೊಸ ವಿಶ್ಲೇಷಣೆ',
+    'dashboard.financialCalc': 'ಹಣಕಾಸು ಕ್ಯಾಲ್ಕುಲೇಟರ್', 'dashboard.govSchemes': 'ಸರ್ಕಾರಿ ಯೋಜನೆಗಳು', 'dashboard.myReports': 'ನನ್ನ ವರದಿಗಳು',
+    'dashboard.recentReports': 'ಇತ್ತೀಚಿನ ವರದಿಗಳು', 'dashboard.noReports': 'ಇನ್ನೂ ಯಾವುದೇ ವರದಿಗಳಿಲ್ಲ. ಹೊಸ ವಿಶ್ಲೇಷಣೆಯನ್ನು ಪ್ರಾರಂಭಿಸಿ!',
+    'dashboard.viewReport': 'ವರದಿ ವೀಕ್ಷಿಸಿ', 'dashboard.score': 'ಸಾಧ್ಯತೆಯ ಸ್ಕೋರ್',
+    'common.loading': 'ಲೋಡ್ ಆಗುತ್ತಿದೆ...', 'common.next': 'ಮುಂದೆ', 'common.previous': 'ಹಿಂದೆ', 'common.submit': 'ಸಲ್ಲಿಸಿ',
+    'common.disclaimer': 'AI-ರಚಿತ ಮಾಹಿತಿ. ಸ್ಥಳೀಯ ಅಧಿಕಾರಿಗಳೊಂದಿಗೆ ಪರಿಶೀಲಿಸಿ.',
+  };
+
+  // Malayalam translations
+  const ml = {
+    'app.title': 'ബിസിനസ് ഉപദേശക പ്ലാറ്റ്ഫോം',
+    'app.subtitle': 'ഗ്രാമീണ സൂക്ഷ്മ സംരംഭകർക്കായി AI-അധിഷ്ഠിത ഉപദേശകൻ',
+    'app.tagline': 'സ്മാർട്ട് ബിസിനസ് വിവരങ്ങളിലൂടെ ഗ്രാമീണ സംരംഭകരെ ശാക്തീകരിക്കുന്നു',
+    'nav.home': 'ഹോം', 'nav.dashboard': 'ഡാഷ്‌ബോർഡ്', 'nav.newAnalysis': 'പുതിയ വിശകലനം', 'nav.schemes': 'സർക്കാർ പദ്ധതികൾ',
+    'nav.calculator': 'സാമ്പത്തിക കാൽക്കുലേറ്റർ', 'nav.myReports': 'എന്റെ റിപ്പോർട്ടുകൾ', 'nav.logout': 'ലോഗ് ഔട്ട്', 'nav.login': 'ലോഗിൻ',
+    'nav.signup': 'സൈൻ അപ്പ്', 'nav.language': 'ഭാഷ',
+    'auth.login': 'ലോഗിൻ', 'auth.signup': 'സൈൻ അപ്പ്', 'auth.email': 'ഇമെയിൽ വിലാസം', 'auth.password': 'പാസ്‌വേഡ്',
+    'auth.confirmPassword': 'പാസ്‌വേഡ് സ്ഥിരീകരിക്കുക', 'auth.fullName': 'പൂർണ്ണ നാമം', 'auth.mobile': 'മൊബൈൽ നമ്പർ',
+    'auth.loginBtn': 'ലോഗിൻ', 'auth.signupBtn': 'അക്കൗണ്ട് ഉണ്ടാക്കുക', 'auth.noAccount': 'അക്കൗണ്ടില്ലേ?',
+    'auth.hasAccount': 'ഇതിനകം അക്കൗണ്ടുണ്ടോ?', 'auth.welcome': 'സ്വാഗതം', 'auth.createAccount': 'നിങ്ങളുടെ അക്കൗണ്ട് ഉണ്ടാക്കുക',
+    'location.title': 'നിങ്ങളുടെ സ്ഥലം തിരഞ്ഞെടുക്കുക', 'location.state': 'സംസ്ഥാനം', 'location.district': 'ജില്ല',
+    'location.tehsil': 'താലൂക്ക്', 'location.block': 'ബ്ലോക്ക്', 'location.village': 'ഗ്രാമം',
+    'location.selectState': 'സംസ്ഥാനം തിരഞ്ഞെടുക്കുക', 'location.selectDistrict': 'ജില്ല തിരഞ്ഞെടുക്കുക',
+    'location.selectTehsil': 'താലൂക്ക് തിരഞ്ഞെടുക്കുക', 'location.selectBlock': 'ബ്ലോക്ക് തിരഞ്ഞെടുക്കുക', 'location.selectVillage': 'ഗ്രാമം തിരഞ്ഞെടുക്കുക',
+    'business.title': 'ബിസിനസ് വിവരങ്ങൾ', 'business.category': 'ബിസിനസ് വിഭാഗം', 'business.selectCategory': 'വിഭാഗം തിരഞ്ഞെടുക്കുക',
+    'business.availableCapital': 'ലഭ്യമായ മൂലധനം (₹)', 'business.enterCapital': 'നിങ്ങളുടെ മൂലധനം നൽകുക', 'business.searchRadius': 'തിരച്ചിൽ ആരം (കി.മീ)',
+    'analysis.title': 'സാധ്യതാ വിശകലനം', 'analysis.generate': 'വിശകലനം ഉണ്ടാക്കുക', 'analysis.generating': 'AI വിശകലനം തയാറാകുന്നു...',
+    'analysis.step1': 'സ്ഥലം തിരഞ്ഞെടുക്കുക', 'analysis.step2': 'ബിസിനസ് വിവരങ്ങൾ', 'analysis.step3': 'ഫലങ്ങൾ കാണുക',
+    'dashboard.title': 'ബിസിനസ് ഡാഷ്‌ബോർഡ്', 'dashboard.welcome': 'സ്വാഗതം', 'dashboard.newAnalysis': 'പുതിയ വിശകലനം',
+    'dashboard.financialCalc': 'സാമ്പത്തിക കാൽക്കുലേറ്റർ', 'dashboard.govSchemes': 'സർക്കാർ പദ്ധതികൾ', 'dashboard.myReports': 'എന്റെ റിപ്പോർട്ടുകൾ',
+    'dashboard.recentReports': 'അടുത്തകാലത്തെ റിപ്പോർട്ടുകൾ', 'dashboard.noReports': 'ഇതുവരെ റിപ്പോർട്ടുകളൊന്നുമില്ല. പുതിയ വിശകലനം തുടങ്ങൂ!',
+    'dashboard.viewReport': 'റിപ്പോർട്ട് കാണുക', 'dashboard.score': 'സാധ്യതാ സ്കോർ',
+    'common.loading': 'ലോഡ് ചെയ്യുന്നു...', 'common.next': 'അടുത്തത്', 'common.previous': 'മുമ്പത്തേത്', 'common.submit': 'സമർപ്പിക്കുക',
+    'common.disclaimer': 'AI നിർമ്മിച്ച വിവരങ്ങൾ. പ്രാദേശിക അധികാരികളുമായി പരിശോധിക്കുക.',
+  };
+
+  // Punjabi translations
+  const pa = {
+    'app.title': 'ਕਾਰੋਬਾਰੀ ਸਲਾਹਕਾਰ ਮੰਚ',
+    'app.subtitle': 'ਪੇਂਡੂ ਛੋਟੇ ਉੱਦਮੀਆਂ ਲਈ AI-ਸੰਚਾਲਿਤ ਕਾਰੋਬਾਰੀ ਸਲਾਹਕਾਰ',
+    'app.tagline': 'ਸਮਾਰਟ ਕਾਰੋਬਾਰੀ ਜਾਣਕਾਰੀ ਨਾਲ ਪੇਂਡੂ ਉੱਦਮੀਆਂ ਦਾ ਸ਼ਕਤੀਕਰਨ',
+    'nav.home': 'ਹੋਮ', 'nav.dashboard': 'ਡੈਸ਼ਬੋਰਡ', 'nav.newAnalysis': 'ਨਵਾਂ ਵਿਸ਼ਲੇਸ਼ਣ', 'nav.schemes': 'ਸਰਕਾਰੀ ਸਕੀਮਾਂ',
+    'nav.calculator': 'ਵਿੱਤੀ ਕੈਲਕੁਲੇਟਰ', 'nav.myReports': 'ਮੇਰੀਆਂ ਰਿਪੋਰਟਾਂ', 'nav.logout': 'ਲੌਗਆਊਟ', 'nav.login': 'ਲੌਗਇਨ',
+    'nav.signup': 'ਸਾਈਨ ਅੱਪ', 'nav.language': 'ਭਾਸ਼ਾ',
+    'auth.login': 'ਲੌਗਇਨ', 'auth.signup': 'ਸਾਈਨ ਅੱਪ', 'auth.email': 'ਈਮੇਲ ਪਤਾ', 'auth.password': 'ਪਾਸਵਰਡ',
+    'auth.confirmPassword': 'ਪਾਸਵਰਡ ਦੀ ਪੁਸ਼ਟੀ ਕਰੋ', 'auth.fullName': 'ਪੂਰਾ ਨਾਮ', 'auth.mobile': 'ਮੋਬਾਈਲ ਨੰਬਰ',
+    'auth.loginBtn': 'ਲੌਗਇਨ', 'auth.signupBtn': 'ਖਾਤਾ ਬਣਾਓ', 'auth.noAccount': 'ਖਾਤਾ ਨਹੀਂ ਹੈ?',
+    'auth.hasAccount': 'ਪਹਿਲਾਂ ਤੋਂ ਖਾਤਾ ਹੈ?', 'auth.welcome': 'ਜੀ ਆਇਆਂ ਨੂੰ', 'auth.createAccount': 'ਆਪਣਾ ਖਾਤਾ ਬਣਾਓ',
+    'location.title': 'ਆਪਣੀ ਜਗ੍ਹਾ ਚੁਣੋ', 'location.state': 'ਰਾਜ', 'location.district': 'ਜ਼ਿਲ੍ਹਾ',
+    'location.tehsil': 'ਤਹਿਸੀਲ', 'location.block': 'ਬਲਾਕ', 'location.village': 'ਪਿੰਡ',
+    'location.selectState': 'ਰਾਜ ਚੁਣੋ', 'location.selectDistrict': 'ਜ਼ਿਲ੍ਹਾ ਚੁਣੋ',
+    'location.selectTehsil': 'ਤਹਿਸੀਲ ਚੁਣੋ', 'location.selectBlock': 'ਬਲਾਕ ਚੁਣੋ', 'location.selectVillage': 'ਪਿੰਡ ਚੁਣੋ',
+    'business.title': 'ਕਾਰੋਬਾਰੀ ਜਾਣਕਾਰੀ', 'business.category': 'ਕਾਰੋਬਾਰੀ ਸ਼੍ਰੇਣੀ', 'business.selectCategory': 'ਸ਼੍ਰੇਣੀ ਚੁਣੋ',
+    'business.availableCapital': 'ਉਪਲਬਧ ਪੂੰਜੀ (₹)', 'business.enterCapital': 'ਆਪਣੀ ਪੂੰਜੀ ਦਰਜ ਕਰੋ', 'business.searchRadius': 'ਖੋਜ ਦਾ ਘੇਰਾ (ਕਿਮੀ)',
+    'analysis.title': 'ਕਾਰੋਬਾਰੀ ਸੰਭਾਵਨਾ ਵਿਸ਼ਲੇਸ਼ਣ', 'analysis.generate': 'ਵਿਸ਼ਲੇਸ਼ਣ ਤਿਆਰ ਕਰੋ', 'analysis.generating': 'AI ਵਿਸ਼ਲੇਸ਼ਣ ਤਿਆਰ ਹੋ ਰਿਹਾ ਹੈ...',
+    'analysis.step1': 'ਜਗ੍ਹਾ ਚੁਣੋ', 'analysis.step2': 'ਕਾਰੋਬਾਰੀ ਵੇਰਵੇ', 'analysis.step3': 'ਨਤੀਜੇ ਦੇਖੋ',
+    'dashboard.title': 'ਕਾਰੋਬਾਰੀ ਡੈਸ਼ਬੋਰਡ', 'dashboard.welcome': 'ਜੀ ਆਇਆਂ ਨੂੰ', 'dashboard.newAnalysis': 'ਨਵਾਂ ਵਿਸ਼ਲੇਸ਼ਣ',
+    'dashboard.financialCalc': 'ਵਿੱਤੀ ਕੈਲਕੁਲੇਟਰ', 'dashboard.govSchemes': 'ਸਰਕਾਰੀ ਸਕੀਮਾਂ', 'dashboard.myReports': 'ਮੇਰੀਆਂ ਰਿਪੋਰਟਾਂ',
+    'dashboard.recentReports': 'ਤਾਜ਼ਾ ਰਿਪੋਰਟਾਂ', 'dashboard.noReports': 'ਅਜੇ ਕੋਈ ਰਿਪੋਰਟ ਨਹੀਂ ਹੈ। ਨਵਾਂ ਵਿਸ਼ਲੇਸ਼ਣ ਸ਼ੁਰੂ ਕਰੋ!',
+    'dashboard.viewReport': 'ਰਿਪੋਰਟ ਦੇਖੋ', 'dashboard.score': 'ਸੰਭਾਵਨਾ ਸਕੋਰ',
+    'common.loading': 'ਲੋਡ ਹੋ ਰਿਹਾ ਹੈ...', 'common.next': 'ਅਗਲਾ', 'common.previous': 'ਪਿਛਲਾ', 'common.submit': 'ਜਮ੍ਹਾਂ ਕਰੋ',
+    'common.disclaimer': 'AI-ਤਿਆਰ ਕੀਤੀ ਜਾਣਕਾਰੀ। ਸਥਾਨਕ ਅਧਿਕਾਰੀਆਂ ਤੋਂ ਤਸਦੀਕ ਕਰੋ।',
+  };
+
+  // Helper to build translation rows for any language using fallbacks
+  const languagesDict = { en, hi, bn, te, mr, ta, gu, kn, ml, pa };
+  const allLanguageCodes = ['en', 'hi', 'bn', 'te', 'mr', 'ta', 'gu', 'kn', 'ml', 'pa', 'or', 'as', 'ur', 'ne', 'sa', 'mai', 'kok', 'sd'];
+
+  const allRows = [];
+  allLanguageCodes.forEach(code => {
+    const dict = languagesDict[code] || hi; // Use Hindi or English as base translation dictionary for remaining codes
+    Object.entries(en).forEach(([key, fallbackEn]) => {
+      const val = dict[key] || fallbackEn;
+      allRows.push({
+        language_code: code,
+        translation_key: key,
+        translation_value: val,
+      });
+    });
+  });
+
+  const chunkSize = 20;
+  for (let i = 0; i < allRows.length; i += chunkSize) {
+    const chunk = allRows.slice(i, i + chunkSize);
+    await Translation.bulkCreate(chunk);
+  }
+
+  console.log(`  ✓ Created translations for ${allLanguageCodes.length} Indian languages (${allRows.length} total entries)`);
   console.log(`  ✓ 18 languages registered`);
 }
