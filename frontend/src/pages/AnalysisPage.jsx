@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
-import { locationService, businessService, analysisService } from '../services/index';
+import { locationService, businessService, analysisService, INDIAN_STATES_FALLBACK } from '../services/index';
 import toast from 'react-hot-toast';
 
 export default function AnalysisPage() {
@@ -28,7 +28,9 @@ export default function AnalysisPage() {
 
   // Load states and categories on mount
   useEffect(() => {
-    locationService.getStates().then(res => setStates(res.data || [])).catch(() => {});
+    locationService.getStates()
+      .then(res => setStates(res.data && res.data.length > 0 ? res.data : INDIAN_STATES_FALLBACK))
+      .catch(() => setStates(INDIAN_STATES_FALLBACK));
     businessService.getCategories().then(res => setCategories(res.data || [])).catch(() => {});
   }, []);
 
@@ -43,24 +45,52 @@ export default function AnalysisPage() {
 
   useEffect(() => {
     if (form.district_id) {
-      locationService.getTehsils(form.district_id).then(res => setTehsils(res.data || [])).catch(() => {});
-      locationService.getBlocks(form.district_id).then(res => setBlocks(res.data || [])).catch(() => {});
+      locationService.getTehsils(form.district_id)
+        .then(res => {
+          const fetchedTehsils = res.data || [];
+          setTehsils(fetchedTehsils);
+          // Fetch blocks, or fallback to tehsils if blocks are empty
+          locationService.getBlocks(form.district_id)
+            .then(bRes => {
+              const fetchedBlocks = bRes.data || [];
+              setBlocks(fetchedBlocks.length > 0 ? fetchedBlocks : fetchedTehsils);
+            })
+            .catch(() => setBlocks(fetchedTehsils));
+        })
+        .catch(() => { setTehsils([]); setBlocks([]); });
     } else {
       setTehsils([]); setBlocks([]); setVillages([]);
     }
   }, [form.district_id]);
 
+  // Village fetch effect with fallback
   useEffect(() => {
-    if (form.tehsil_id || form.block_id) {
-      const params = {};
-      if (form.tehsil_id) params.tehsilId = form.tehsil_id;
-      if (form.block_id) params.blockId = form.block_id;
-      if (form.district_id) params.districtId = form.district_id;
-      locationService.getVillages(params).then(res => setVillages(res.data || [])).catch(() => {});
-    } else {
+    if (!form.district_id) {
       setVillages([]);
+      return;
     }
-  }, [form.tehsil_id, form.block_id]);
+
+    const params = { districtId: form.district_id };
+    if (form.tehsil_id) params.tehsilId = form.tehsil_id;
+    if (form.block_id) params.blockId = form.block_id;
+
+    locationService.getVillages(params)
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setVillages(res.data);
+        } else {
+          // Fallback to all villages in the district if sub-filter returns empty
+          locationService.getVillages({ districtId: form.district_id })
+            .then(dRes => setVillages(dRes.data || []))
+            .catch(() => setVillages([]));
+        }
+      })
+      .catch(() => {
+        locationService.getVillages({ districtId: form.district_id })
+          .then(dRes => setVillages(dRes.data || []))
+          .catch(() => setVillages([]));
+      });
+  }, [form.district_id, form.tehsil_id, form.block_id]);
 
   const update = (key, val) => {
     const newForm = { ...form, [key]: val };
@@ -151,7 +181,7 @@ export default function AnalysisPage() {
 
           <div className="form-group">
             <label className="form-label">{t('location.village', 'Village')} *</label>
-            <select className="form-select" value={form.village_id} onChange={e => update('village_id', e.target.value)} disabled={!form.tehsil_id && !form.block_id}>
+            <select className="form-select" value={form.village_id} onChange={e => update('village_id', e.target.value)} disabled={!form.district_id}>
               <option value="">{t('location.selectVillage', 'Select Village')}</option>
               {villages.map(v => <option key={v.id} value={v.id}>{v.name}</option>)}
             </select>

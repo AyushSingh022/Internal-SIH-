@@ -6,7 +6,10 @@ import { successResponse, errorResponse } from '../utils/response.js';
 export async function generateAnalysis(req, res) {
   try {
     const errors = validationResult(req);
-    if (!errors.isEmpty()) return errorResponse(res, 'Validation failed', 400, errors.array());
+    if (!errors.isEmpty()) {
+      const errorMsg = errors.array().map(e => e.msg).join(', ');
+      return errorResponse(res, errorMsg || 'Validation failed', 400, errors.array());
+    }
 
     const report = await analysisService.createAnalysis({
       userId: req.user.id,

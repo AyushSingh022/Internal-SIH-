@@ -10,7 +10,7 @@ function initGemini() {
   }
   if (!genAI) {
     genAI = new GoogleGenerativeAI(env.gemini.apiKey);
-    model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
+    model = genAI.getGenerativeModel({ model: 'gemini-3.6-flash' });
   }
   return model;
 }
@@ -56,8 +56,8 @@ Analyze the following business proposal and generate a comprehensive feasibility
 
 ## Eligible Government Schemes
 ${eligibleSchemes?.length > 0
-    ? eligibleSchemes.map(s => `- ${s.name}: ${s.description || s.objective?.[0] || 'N/A'}`).join('\n')
-    : 'No specific scheme data available'}
+      ? eligibleSchemes.map(s => `- ${s.name}: ${s.description || s.objective?.[0] || 'N/A'}`).join('\n')
+      : 'No specific scheme data available'}
 
 ## Financial Data
 ${financialData ? JSON.stringify(financialData, null, 2) : 'Data not available'}
@@ -123,7 +123,7 @@ IMPORTANT RULES:
       ...parsed,
       _meta: {
         source: 'ai_generated',
-        model: 'gemini-2.0-flash',
+        model: 'gemini-3.6-flash',
         disclaimer: 'This analysis is AI-generated and should be verified with local authorities and market research.',
         generated_at: new Date().toISOString(),
       },

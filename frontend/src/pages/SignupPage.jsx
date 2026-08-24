@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useLanguage } from '../context/LanguageContext';
-import { locationService } from '../services/index';
+import { locationService, INDIAN_STATES_FALLBACK } from '../services/index';
 import toast from 'react-hot-toast';
 
 export default function SignupPage() {
@@ -19,7 +19,9 @@ export default function SignupPage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    locationService.getStates().then(res => setStates(res.data || [])).catch(() => {});
+    locationService.getStates()
+      .then(res => setStates(res.data && res.data.length > 0 ? res.data : INDIAN_STATES_FALLBACK))
+      .catch(() => setStates(INDIAN_STATES_FALLBACK));
   }, []);
 
   useEffect(() => {
@@ -80,7 +82,7 @@ export default function SignupPage() {
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
           <div className="form-group">
             <label className="form-label">{t('auth.password', 'Password')}</label>
-            <input id="signup-password" type="password" className="form-input" value={form.password} onChange={e => update('password', e.target.value)} required minLength={8} />
+            <input id="signup-password" type="password" className="form-input" value={form.password} onChange={e => update('password', e.target.value)} required minLength={6} />
           </div>
           <div className="form-group">
             <label className="form-label">{t('auth.confirmPassword', 'Confirm')}</label>
@@ -92,7 +94,7 @@ export default function SignupPage() {
             <label className="form-label">{t('auth.state', 'State')}</label>
             <select id="signup-state" className="form-select" value={form.state_id} onChange={e => update('state_id', e.target.value)}>
               <option value="">{t('location.selectState', 'Select')}</option>
-              {states.map(s => <option key={s.id} value={s.id}>{s.name}</option>)}
+              {states.map(s => <option key={s.id} value={s.id}>{s.name} {s.name_local ? `(${s.name_local})` : ''}</option>)}
             </select>
           </div>
           <div className="form-group">

@@ -2,17 +2,15 @@ import { body } from 'express-validator';
 
 export const signupValidator = [
   body('full_name').trim().notEmpty().withMessage('Full name is required').isLength({ max: 150 }),
-  body('email').trim().isEmail().withMessage('Valid email is required').normalizeEmail(),
-  body('mobile').optional().trim().isMobilePhone('any').withMessage('Valid mobile number is required'),
+  body('email').trim().isEmail().withMessage('Valid email address is required').normalizeEmail(),
+  body('mobile').optional({ checkFalsy: true }).trim().isMobilePhone('any').withMessage('Valid mobile number is required'),
   body('password')
-    .isLength({ min: 8 }).withMessage('Password must be at least 8 characters')
-    .matches(/[A-Z]/).withMessage('Password must contain at least one uppercase letter')
-    .matches(/[0-9]/).withMessage('Password must contain at least one number'),
+    .isLength({ min: 6 }).withMessage('Password must be at least 6 characters'),
   body('confirm_password')
     .custom((value, { req }) => value === req.body.password).withMessage('Passwords do not match'),
   body('preferred_language').optional().isString(),
-  body('state_id').optional().isInt(),
-  body('district_id').optional().isInt(),
+  body('state_id').optional({ checkFalsy: true }).isInt().withMessage('State must be a valid number'),
+  body('district_id').optional({ checkFalsy: true }).isInt().withMessage('District must be a valid number'),
 ];
 
 export const loginValidator = [

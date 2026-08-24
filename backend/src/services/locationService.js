@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import { State, District, Tehsil, Block, Village } from '../models/index.js';
 
 export async function getStates() {
@@ -27,9 +28,15 @@ export async function getBlocks(districtId) {
 
 export async function getVillages(filters) {
   const where = {};
-  if (filters.tehsilId) where.tehsil_id = filters.tehsilId;
-  if (filters.blockId) where.block_id = filters.blockId;
   if (filters.districtId) where.district_id = filters.districtId;
+
+  if (filters.tehsilId && filters.blockId) {
+    where[Op.or] = [{ tehsil_id: filters.tehsilId }, { block_id: filters.blockId }];
+  } else if (filters.tehsilId) {
+    where.tehsil_id = filters.tehsilId;
+  } else if (filters.blockId) {
+    where.block_id = filters.blockId;
+  }
 
   return await Village.findAll({
     where,
