@@ -1,4 +1,4 @@
-# 🚀 SIH AI-Driven Hyper-Local Business Advisory Platform
+# 🚀 GRAMVYPAR AI-Driven Hyper-Local Business Advisory Platform
 
 > **Empowering Rural Micro-Entrepreneurs in India with AI-Powered Market Insights, Government Scheme Matching, and Financial Advisory.**
 
